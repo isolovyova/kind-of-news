@@ -1,0 +1,28 @@
+{
+  "issue_id": "2026-08-03",
+  "good_thing": "(Test City): A neighborhood library opened a free repair shelf for small household items.",
+  "current_header": "on_this_day",
+  "current_or_history": "In a test archive, a small decision made room for something useful.",
+  "tiny_fact": "Some test fixtures are more reliable when they are deliberately boring.",
+  "thought": "A useful thing does not need to announce itself.",
+  "sources": [
+    {
+      "block": "good_thing",
+      "name": "Example source",
+      "descriptor": "synthetic good-news fixture",
+      "url": "https://example.com/kind-of-news/good-thing"
+    },
+    {
+      "block": "current_or_history",
+      "name": "Example archive",
+      "descriptor": "synthetic historical fixture",
+      "url": "https://example.com/kind-of-news/on-this-day"
+    },
+    {
+      "block": "tiny_fact",
+      "name": "Example reference",
+      "descriptor": "synthetic fact fixture",
+      "url": "https://example.com/kind-of-news/tiny-fact"
+    }
+  ]
+}

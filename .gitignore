@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.kind-of-news-state/
+.env
+config.local.yml
+.DS_Store

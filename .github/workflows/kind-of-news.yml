@@ -1,0 +1,107 @@
+name: Kind of News
+
+on:
+  schedule:
+    # GitHub may delay scheduled runs during high-load periods.
+    - cron: "0 6 * * 1,3,5"
+      timezone: "America/Vancouver"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Use dry-run first; choose send only after setup is verified."
+        required: true
+        type: choice
+        options:
+          - dry-run
+          - send
+        default: dry-run
+      issue_date:
+        description: "Optional YYYY-MM-DD override for a manual run."
+        required: false
+        type: string
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: kind-of-news-${{ github.ref }}-${{ inputs.issue_date || 'scheduled' }}
+  cancel-in-progress: false
+
+jobs:
+  generate-and-deliver:
+    runs-on: ubuntu-latest
+    env:
+      KIND_OF_NEWS_MODE: ${{ inputs.mode || 'send' }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install runtime dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Resolve issue date
+        id: issue
+        env:
+          REQUESTED_DATE: ${{ inputs.issue_date }}
+        run: |
+          python - <<'PY'
+          import os
+          from datetime import datetime
+          from zoneinfo import ZoneInfo
+
+          requested = os.environ.get("REQUESTED_DATE", "").strip()
+          issue_date = requested or datetime.now(ZoneInfo("America/Vancouver")).date().isoformat()
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as handle:
+              handle.write("date=%s\n" % issue_date)
+          PY
+
+      - name: Restore issue state
+        uses: actions/cache/restore@v4
+        with:
+          path: .kind-of-news-state
+          key: kind-of-news-state-${{ steps.issue.outputs.date }}
+
+      - name: Run setup checks
+        if: ${{ env.KIND_OF_NEWS_MODE == 'send' }}
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GMAIL_CLIENT_ID: ${{ secrets.GMAIL_CLIENT_ID }}
+          GMAIL_CLIENT_SECRET: ${{ secrets.GMAIL_CLIENT_SECRET }}
+          GMAIL_REFRESH_TOKEN: ${{ secrets.GMAIL_REFRESH_TOKEN }}
+          GMAIL_TO: ${{ secrets.GMAIL_TO }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+        run: python scripts/setup.py --check --config config.yml
+
+      - name: Generate and deliver
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
+          GMAIL_CLIENT_ID: ${{ secrets.GMAIL_CLIENT_ID }}
+          GMAIL_CLIENT_SECRET: ${{ secrets.GMAIL_CLIENT_SECRET }}
+          GMAIL_REFRESH_TOKEN: ${{ secrets.GMAIL_REFRESH_TOKEN }}
+          GMAIL_TO: ${{ secrets.GMAIL_TO }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+        run: |
+          if [ "$KIND_OF_NEWS_MODE" = "dry-run" ]; then
+            python -m runner --config config.yml --date "${{ steps.issue.outputs.date }}" --dry-run
+          else
+            python -m runner --config config.yml --date "${{ steps.issue.outputs.date }}"
+          fi
+
+      - name: Save issue state
+        if: ${{ always() && env.KIND_OF_NEWS_MODE == 'send' }}
+        uses: actions/cache/save@v4
+        continue-on-error: true
+        with:
+          path: .kind-of-news-state
+          key: kind-of-news-state-${{ steps.issue.outputs.date }}
