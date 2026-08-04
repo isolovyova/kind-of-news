@@ -1,1 +1,27 @@
-m«ëˆ§½©buªàºg§µÉZ¹×©–è"Ÿùš®G­¦Vœz;(KæÚ±î¸Ø[é¢Šwâ•ê(º×â•æÛ­æ¤n·š‘éÜ¡×¢ëiºÛ©Š{h–)Ş²‡åzx-†{¦×^r‡^uç(uè§¦ëa…éiv+)•¬­†+&zËè¢›­Šznµø¥y×Ÿjém~ŠìµØ§¢‹­¦ëhºÚnµø¥y×Ÿjém~ŠìµÚ.
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "kind-of-news",
+  "owner": {
+    "name": "Iryna Solovyova"
+  },
+  "metadata": {
+    "description": "A warm, fact-checked news digest skill for recurring delivery.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "kind-of-news",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/isolovyova/kind-of-news.git",
+        "path": "skills/kind-of-news"
+      },
+      "description": "Generate a warm, fact-checked English digest with four consistent blocks.",
+      "version": "1.0.0",
+      "homepage": "https://github.com/isolovyova/kind-of-news",
+      "repository": "https://github.com/isolovyova/kind-of-news",
+      "license": "MIT",
+      "category": "Productivity"
+    }
+  ]
+}
