@@ -4,19 +4,60 @@ Kind of News is a small, warm, fact-checked English news bulletin for people
 who have had enough bulletins. It creates one issue every Monday, Wednesday, and
 Friday and sends it to the channel you choose.
 
-The public repository has two surfaces:
+The easiest way to install Kind of News is through an AI coding assistant. The
+assistant is the guide; GitHub Actions is the quiet backend that keeps the
+schedule running.
 
-1. A reusable `kind-of-news` skill for Codex/Cowork.
-2. A self-hosted GitHub Actions runner for the one-time setup → automatic delivery flow.
+## Install with one copy-paste message
 
-## The one-time setup flow
+Copy this one line into Codex or Claude Code:
+
+```text
+Install and configure Kind of News from https://github.com/isolovyova/kind-of-news. Guide me one step at a time, ask only one question at a time, use GitHub Actions for automatic Monday/Wednesday/Friday delivery, and do not ask me to paste secrets into chat.
+```
+
+The assistant should:
+
+- help create the user's own repository from this public template;
+- ask for delivery channel(s), timezone, and time using the defaults below;
+- explain exactly which secret is needed for the selected channel;
+- guide the user through credential authorization without handling secret
+  values in chat;
+- run setup checks and a dry run before any real delivery;
+- wait for the user's confirmation before sending the first real issue.
+
+A bare URL can be treated as a reference by some assistants. The one-line
+message above makes the installation request explicit while keeping the user
+out of the implementation details.
+
+The user still has to authorize Gmail, Telegram, or a webhook once. No public
+repository link can safely create those credentials on the user's behalf.
+
+Read the assistant contract in
+[`docs/assistant-setup.md`](docs/assistant-setup.md) when implementing or
+testing this flow.
+
+## What gets installed
+
+The assistant sets up two pieces:
+
+1. The `kind-of-news` skill, which controls research, fact-checking, tone, and
+   the four-block format.
+2. A GitHub Actions workflow that generates and delivers the issue every
+   Monday, Wednesday, and Friday after the one-time setup.
+
+The default schedule is 06:00 in `America/Vancouver`. The user can change it
+during setup.
+
+## Manual fallback: GitHub Actions
+
+If the assistant cannot access GitHub, use this direct path:
 
 1. Create a repository from this template or fork it.
 2. Open **Actions → Kind of News Setup → Run workflow**. Choose one or more
    channels as a comma-separated list, plus the timezone, local delivery time,
-   and webhook preset. The defaults are English, Monday/Wednesday/Friday,
-   06:00, and `America/Vancouver`. The workflow writes only the non-secret
-   `config.yml` and commits it to the repository.
+   and webhook preset. The workflow writes only the non-secret `config.yml`
+   and commits it to the repository.
 3. Add the required values as GitHub Actions Secrets. Never put the values in
    `config.yml` or commit them.
 4. Run **Kind of News Setup** again. It checks the skill and credentials.
@@ -78,9 +119,10 @@ channel fails, the run attempts the remaining channels and stores the validated
 issue plus per-channel success markers in the GitHub Actions cache. A rerun
 retries failed channels without re-sending successful ones.
 
-## Codex/Cowork installation
+## Advanced: install the skill only
 
-Install the skill from the repository with the standard skill installer:
+For users who only want the reusable skill, install it with the standard skill
+installer:
 
 ```bash
 python3 /path/to/install-skill-from-github.py \
@@ -88,9 +130,9 @@ python3 /path/to/install-skill-from-github.py \
   --path skills/kind-of-news
 ```
 
-The skill can generate the same LinkedIn-ready issue on demand. Its scheduled
-delivery depends on the connected apps available in the user's Codex/Cowork
-environment; GitHub Actions is the canonical automated path.
+The skill can generate the same LinkedIn-ready issue on demand. For automatic
+delivery, use the guided setup above so the schedule and delivery state live in
+the user's own repository.
 
 ## Editorial contract
 

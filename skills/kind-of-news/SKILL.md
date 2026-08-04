@@ -1,11 +1,11 @@
 ---
 name: kind-of-news
 description: >
-  Create or schedule a Kind of News bulletin: a warm, gently witty, fact-checked
+  Install, configure, or use Kind of News: a warm, gently witty, fact-checked
   English digest with one recent good-news story, a date-anchored or current
-  curiosity, one tiny fact, and one pressure-releasing thought. Use for Kind of
-  News posts, LinkedIn-ready drafts, scheduled news digests, or requests to
-  configure Kind of News delivery.
+  curiosity, one tiny fact, and one pressure-releasing thought. Use when a user
+  provides the Kind of News GitHub URL, asks for guided recurring delivery, or
+  requests a LinkedIn-ready bulletin.
 ---
 
 # Kind of News
@@ -14,6 +14,23 @@ Create a small, warm, fact-checked window into the parts of the world that do no
 scream. The default cadence is Monday, Wednesday, and Friday. The default output
 is English and is suitable for a LinkedIn post, email, Telegram message, or
 generic webhook.
+
+## Guided installation
+
+Treat a Kind of News GitHub URL or an installation request as a setup task, not
+as a request to draft an issue immediately. Read the repository's
+`docs/assistant-setup.md` when it is available and follow its one-question-at-a-
+time flow.
+
+Use GitHub Actions as the canonical recurring-delivery backend. Guide the user
+through channel, timezone, and time choices, then through the user's own GitHub
+repository and secret store. Do not ask for or echo API keys, OAuth secrets,
+refresh tokens, bot tokens, or webhook URLs in chat. If the current environment
+cannot write to GitHub, give the user the exact page and button to use.
+
+Do not say the automation is installed until the non-secret configuration is
+saved, setup validation is green, and a dry run has produced a valid issue. Ask
+for explicit confirmation before the first real send.
 
 ## Universal introduction
 

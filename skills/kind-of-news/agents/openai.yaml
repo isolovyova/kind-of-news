@@ -1,4 +1,4 @@
 interface:
   display_name: "Kind of News"
-  short_description: "Fact-checked, warm news digest workflow"
-  default_prompt: "Use $kind-of-news to draft today's fact-checked four-block bulletin."
+  short_description: "Guided setup for a warm, fact-checked news digest"
+  default_prompt: "Use $kind-of-news to guide me through setup, then deliver a fact-checked digest three times a week."
