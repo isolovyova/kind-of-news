@@ -1,0 +1,4 @@
+interface:
+  display_name: "Kind of News Setup"
+  short_description: "Start the Kind of News onboarding tutorial"
+  default_prompt: "Start the Kind of News setup tutorial now."

@@ -8,10 +8,12 @@ can read the public Kind of News link.
 The public GitHub repository is a distribution page for the skill. An end user
 does not need to create, fork, clone, or maintain a GitHub repository.
 
-The assistant installs the skill in the user's personal AI environment. The
-selected host owns the recurring task, schedule, delivery authorization, and
-duplicate protection. GitHub Actions remains available as an advanced,
-repo-backed alternative, not the default onboarding path.
+The assistant installs the Kind of News plugin or its two skills in the user's
+personal AI environment. The setup skill owns the tutorial; the editorial skill
+owns research and rendering. The selected host owns the recurring task,
+schedule, delivery authorization, and duplicate protection. GitHub Actions
+remains available as an advanced, repo-backed alternative, not the default
+onboarding path.
 
 ## Start condition
 
@@ -24,6 +26,24 @@ Treat either of these as an installation request:
 Do not start by explaining YAML, Python, GitHub Actions, OAuth scopes, or API
 schemas. Start as a setup guide and keep infrastructure details behind the
 conversation.
+
+## Activation contract
+
+Installation and onboarding are separate operations. A successful installer
+message is not a completed setup.
+
+When a user provides the public link or asks to install Kind of News:
+
+1. Install the public plugin when the host supports plugins; otherwise install
+   both `kind-of-news-setup` and `kind-of-news` from the `skills/` directory.
+2. Invoke `kind-of-news-setup` immediately. Do not end the response with only
+   “installed”, “verified”, or “available next turn”.
+3. Begin with a short explanation of what Kind of News does, then ask exactly
+   one channel question.
+
+If the host cannot invoke a newly installed skill in the same turn, say that
+   installation succeeded but start the setup wizard on the very next turn. Do
+   not claim delivery is configured.
 
 ## Conversation flow
 
@@ -41,7 +61,7 @@ Use these defaults unless the user changes them:
 
 Then follow this order:
 
-1. Install the skill from the public URL. Do not ask the user to create a
+1. Start the setup wizard described above. Do not ask the user to create a
    repository.
 2. Ask for the delivery channel and connect it through the host's approved
    connector or credential screen. Never ask the user to paste a token, OAuth
@@ -52,7 +72,8 @@ Then follow this order:
 5. Show the dry-run issue and ask for explicit confirmation before the first
    live delivery.
 6. Create the recurring task in the host only after the dry run passes and the
-   user confirms. The recurring task must invoke the installed `kind-of-news`
+   user confirms. The recurring task must invoke the installed editorial
+   `kind-of-news` skill
    skill, preserve the four-block contract, and send through the authorized
    channel without asking for approval on every run.
 7. Verify that the task is visible and active, and tell the user where to pause

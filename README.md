@@ -14,17 +14,18 @@ connection in your own account or local profile.
 Copy this one message into Codex or Claude Code:
 
 ```text
-Install the Kind of News skill from https://github.com/isolovyova/kind-of-news, then guide me through a recurring delivery every Monday, Wednesday, and Friday at 06:00 in my timezone. Ask one question at a time, let me choose the delivery channel, use the host's connected accounts or secure credential storage, never ask me to paste secrets into chat, run a dry run first, and create the schedule only after I confirm the first live send.
+Install the Kind of News plugin from https://github.com/isolovyova/kind-of-news and immediately start its setup tutorial in this same turn. Do not stop after saying installed. First explain in two sentences what Kind of News does, then ask me one question at a time. Do not ask me to create a GitHub repository. Use Monday/Wednesday/Friday at 06:00 in my timezone as defaults, keep secrets in the host's secure connection flow, run a dry run first, and create automatic delivery only after I confirm.
 ```
 
 The assistant will:
 
-1. install the skill from this public link;
-2. ask which channel, timezone, and time to use;
-3. connect Gmail, Telegram, Slack, Discord, ntfy, or a webhook when the host
+1. install the plugin, or both skills when plugin installation is unavailable;
+2. immediately start a short welcome and setup tutorial;
+3. ask which channel, timezone, and time to use;
+4. connect Gmail, Telegram, Slack, Discord, ntfy, or a webhook when the host
    supports it;
-4. generate a dry run without sending anything;
-5. create the recurring task after the user confirms the first live send.
+5. generate a dry run without sending anything;
+6. create the recurring task after the user confirms the first live send.
 
 After that, the digest runs automatically. There is no approval gate for every
 future issue. The user can pause or edit the task in the host where it was
@@ -50,12 +51,16 @@ Read the complete assistant contract in
 
 ## What gets installed
 
-The user-facing installation contains one reusable skill:
+The user-facing plugin contains two skills:
 
-1. `skills/kind-of-news/SKILL.md` controls research, fact-checking, tone, and
-   the four-block format.
-2. The host's recurring task invokes that skill and performs delivery through
-   the user's authorized account or connector.
+1. `kind-of-news-setup` is the interactive tutorial and scheduling handoff.
+2. `kind-of-news` controls research, fact-checking, tone, and the four-block
+   format.
+
+The host's recurring task invokes the editorial skill and performs delivery
+through the user's authorized account or connector. Installing the plugin alone
+does not authorize a channel or create a schedule; the setup tutorial handles
+those steps explicitly.
 
 The Python runner and GitHub Actions workflows in this repository are retained
 for users who explicitly want a self-managed, repo-backed deployment.
@@ -70,8 +75,15 @@ management is available:
 /plugin install kind-of-news@kind-of-news --scope user
 ```
 
-The plugin is only the skill package. Scheduling and delivery are still
-configured once in Claude Code Desktop/Routines or another connected host.
+Then invoke the setup wizard if Claude does not start it automatically:
+
+```text
+/kind-of-news:kind-of-news-setup
+```
+
+The plugin contains the tutorial and editorial skill. Scheduling and delivery
+are still configured once in Claude Code Desktop/Routines or another connected
+host.
 
 ## Advanced fallback: GitHub Actions
 
@@ -159,16 +171,19 @@ The product creates LinkedIn-ready text but never auto-posts to LinkedIn.
 
 ## Skill-only install for advanced users
 
-Codex can install the reusable skill directly with the standard GitHub skill
-installer:
+Codex can install the two reusable skills directly with the standard GitHub
+skill installer:
 
 ```bash
+python3 /path/to/install-skill-from-github.py \
+  --repo isolovyova/kind-of-news \
+  --path skills/kind-of-news-setup
 python3 /path/to/install-skill-from-github.py \
   --repo isolovyova/kind-of-news \
   --path skills/kind-of-news
 ```
 
-The skill can generate the same LinkedIn-ready issue on demand. For automatic
+After installation, invoke `kind-of-news-setup` immediately. For automatic
 delivery, use the host setup flow above, or choose the advanced GitHub Actions
 fallback.
 

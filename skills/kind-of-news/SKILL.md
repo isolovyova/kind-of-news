@@ -1,11 +1,12 @@
 ---
 name: kind-of-news
 description: >
-  Install, configure, or use Kind of News: a warm, gently witty, fact-checked
+  Generate or use Kind of News: a warm, gently witty, fact-checked
   English digest with one recent good-news story, a date-anchored or current
-  curiosity, one tiny fact, and one pressure-releasing thought. Use when a user
-  provides the Kind of News GitHub URL, asks for guided recurring delivery, or
-  requests a LinkedIn-ready bulletin.
+  curiosity, one tiny fact, and one pressure-releasing thought. Use after the
+  Kind of News setup wizard is complete, or when a user explicitly requests a
+  LinkedIn-ready bulletin. For installation or recurring delivery, invoke
+  `kind-of-news-setup` first.
 ---
 
 # Kind of News
@@ -15,28 +16,18 @@ scream. The default cadence is Monday, Wednesday, and Friday. The default output
 is English and is suitable for a LinkedIn post, email, Telegram message, or
 generic webhook.
 
-## Guided installation
+## Setup handoff
 
-Treat a Kind of News GitHub URL or an installation request as a setup task, not
-as a request to draft an issue immediately. Read the repository's
-`docs/assistant-setup.md` when it is available and follow its one-question-at-a-
-time flow.
+This file is the editorial engine, not the installation wizard. When the user
+provides the public GitHub URL, asks to install or configure Kind of News, or
+asks for recurring delivery, invoke the sibling `kind-of-news-setup` skill
+first. Do not stop at an installation confirmation and do not ask the user to
+create a GitHub repository.
 
-The public GitHub repository is an installation source. Do not ask the user to
-create, fork, clone, or maintain a GitHub repository. Install this skill in the
-host's personal scope, then use the host's own recurring-task feature for
-schedule, delivery authorization, and duplicate protection. GitHub Actions is
-an advanced repo-backed fallback, not the default path.
-
-Guide the user through channel, timezone, and time choices. Prefer connected
-accounts and approved credential screens. Never ask for or echo API keys, OAuth
-secrets, refresh tokens, bot tokens, or webhook URLs in chat.
-
-Run a dry run before creating the recurring task. Do not say the automation is
-installed until the skill is loaded, the delivery connection is authorized, the
-dry run has produced a valid issue, and the recurring task is visible and
-active. Ask for explicit confirmation before the first real send; later runs
-should be automatic.
+When the setup skill is unavailable, run its essential handoff yourself: give
+the two-sentence welcome, ask one channel question, keep credentials in the
+host's secure connection flow, run a dry run, and ask for confirmation before
+creating a recurring task.
 
 ## Universal introduction
 

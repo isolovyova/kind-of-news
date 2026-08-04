@@ -5,8 +5,8 @@
     "name": "Iryna Solovyova"
   },
   "metadata": {
-    "description": "A warm, fact-checked news digest skill for recurring delivery.",
-    "version": "1.0.0"
+    "description": "A guided setup wizard and editorial skill for a warm, fact-checked news digest.",
+    "version": "1.1.0"
   },
   "plugins": [
     {
@@ -14,10 +14,10 @@
       "source": {
         "source": "git-subdir",
         "url": "https://github.com/isolovyova/kind-of-news.git",
-        "path": "skills/kind-of-news"
+        "path": "skills"
       },
-      "description": "Generate a warm, fact-checked English digest with four consistent blocks.",
-      "version": "1.0.0",
+      "description": "Install the setup wizard and editorial skill for automatic, fact-checked delivery three times a week.",
+      "version": "1.1.0",
       "homepage": "https://github.com/isolovyova/kind-of-news",
       "repository": "https://github.com/isolovyova/kind-of-news",
       "license": "MIT",
