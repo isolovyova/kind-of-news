@@ -12,30 +12,20 @@ The public repository has two surfaces:
 ## The one-time setup flow
 
 1. Create a repository from this template or fork it.
-2. Copy `config.example.yml` to `config.yml`:
-
-   ```bash
-   cp config.example.yml config.yml
-   ```
-
-3. Run the setup helper locally:
-
-   ```bash
-   python3 -m pip install -r requirements.txt
-   python3 scripts/setup.py
-   ```
-
-   The defaults are English, Monday/Wednesday/Friday, 06:00, and
-   `America/Vancouver`. Select one or more channels: `gmail`, `telegram`, or
-   `webhook`.
-
-4. Commit `config.yml` to your fork. It contains only non-secret preferences.
-5. Add the printed names as GitHub Actions Secrets. Never put the values in
+2. Open **Actions → Kind of News Setup → Run workflow**. Choose one or more
+   channels as a comma-separated list, plus the timezone, local delivery time,
+   and webhook preset. The defaults are English, Monday/Wednesday/Friday,
+   06:00, and `America/Vancouver`. The workflow writes only the non-secret
+   `config.yml` and commits it to the repository.
+3. Add the required values as GitHub Actions Secrets. Never put the values in
    `config.yml` or commit them.
-6. Run **Actions → Kind of News Setup**. It checks the skill and credentials.
-7. Run **Actions → Kind of News → Run workflow** with `dry-run` first.
-8. Choose `send` only after the dry run looks correct. Scheduled runs then
+4. Run **Kind of News Setup** again. It checks the skill and credentials.
+5. Run **Actions → Kind of News → Run workflow** with `dry-run` first.
+6. Choose `send` only after the dry run looks correct. Scheduled runs then
    deliver automatically.
+
+For local setup, copy `config.example.yml` to `config.yml` and run
+`python3 scripts/setup.py`; commit only the resulting non-secret configuration.
 
 GitHub scheduled workflows can be delayed during high-load periods. In public
 repositories they can also be disabled after 60 days without repository
