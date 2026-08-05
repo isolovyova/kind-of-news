@@ -65,6 +65,10 @@ class ButtondownDelivery:
             "subject": "Kind of News #%s" % issue.issue_id,
             "body": "<!-- buttondown-editor-mode: fancy -->\n" + render_html(issue),
             "slug": "kind-of-news-%s" % issue.issue_id,
+            # Buttondown now safely defaults API-created emails to drafts. A
+            # live Kind of News run is explicitly user-confirmed, so queue the
+            # validated issue for sending instead.
+            "status": "about_to_send",
         }
         try:
             response = self.publish_request(EMAILS_URL, self._api_key, payload)
