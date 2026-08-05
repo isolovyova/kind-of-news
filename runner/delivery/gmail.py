@@ -5,18 +5,37 @@ from __future__ import annotations
 import base64
 import json
 from email.message import EmailMessage
+from email.utils import parseaddr
 from typing import Any, Callable, Dict, Optional
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 
 from ..models import NewsIssue
-from ..render import render_markdown
+from ..render import render_html, render_markdown
 from .base import DeliveryError, DeliveryResult
 
 
 TOKEN_URL = "https://oauth2.googleapis.com/token"
 SEND_URL = "https://gmail.googleapis.com/gmail/v1/users/me/messages/send"
+
+
+def _validate_sender(sender: Optional[str]) -> str:
+    """Accept only an address, never a display name or header-injection value."""
+
+    value = (sender or "").strip()
+    if not value:
+        return ""
+    if any(character in value for character in "\r\n"):
+        raise DeliveryError("GMAIL_FROM must be a valid email address")
+    if parseaddr(value) != ("", value):
+        raise DeliveryError("GMAIL_FROM must be a valid email address")
+    local, separator, domain = value.rpartition("@")
+    if not separator or not local or not domain or "." not in domain:
+        raise DeliveryError("GMAIL_FROM must be a valid email address")
+    if any(character.isspace() or character in "<>" for character in value):
+        raise DeliveryError("GMAIL_FROM must be a valid email address")
+    return value
 
 
 def _post_form(url: str, values: Dict[str, str]) -> Dict[str, Any]:
@@ -52,6 +71,8 @@ def _post_gmail(url: str, token: str, payload: Dict[str, Any]) -> Dict[str, Any]
 
 
 class GmailDelivery:
+    """Send through the OAuth account, optionally using its verified alias."""
+
     def __init__(
         self,
         client_id: str,
@@ -60,6 +81,7 @@ class GmailDelivery:
         recipient: str,
         token_exchange: Callable[[str, Dict[str, str]], Dict[str, Any]] = _post_form,
         send_request: Callable[[str, str, Dict[str, Any]], Dict[str, Any]] = _post_gmail,
+        sender: Optional[str] = None,
     ):
         values = (client_id, client_secret, refresh_token, recipient)
         if not all(values):
@@ -72,6 +94,7 @@ class GmailDelivery:
         self.recipient = recipient
         self.token_exchange = token_exchange
         self.send_request = send_request
+        self.sender = _validate_sender(sender)
 
     def send(self, issue: NewsIssue) -> DeliveryResult:
         token_response = self.token_exchange(
@@ -89,8 +112,11 @@ class GmailDelivery:
 
         message = EmailMessage()
         message["To"] = self.recipient
+        if self.sender:
+            message["From"] = self.sender
         message["Subject"] = "Kind of News #%s" % issue.issue_id
-        message.set_content(render_markdown(issue))
+        message.set_content(render_markdown(issue), subtype="plain")
+        message.add_alternative(render_html(issue), subtype="html")
         encoded = base64.urlsafe_b64encode(message.as_bytes()).decode("ascii")
         response = self.send_request(SEND_URL, access_token, {"raw": encoded})
         if not isinstance(response, dict) or not response.get("id"):

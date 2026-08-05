@@ -25,9 +25,14 @@ first. Do not stop at an installation confirmation and do not ask the user to
 create a GitHub repository.
 
 When the setup skill is unavailable, run its essential handoff yourself: give
-the two-sentence welcome, ask one channel question, keep credentials in the
-host's secure connection flow, run a dry run, and ask for confirmation before
-creating a recurring task.
+the approved welcome, ask one channel question, keep credentials in the host's
+secure connection flow, collect the cadence, timezone, and time one question at
+a time, then ask for one final confirmation using the configured values. After
+an affirmative answer, generate and validate the first issue, activate the
+recurring schedule for subsequent issues, and send issue #1 immediately even if
+today is not a scheduled day. Report success only after both schedule activation
+and the immediate send are verified. If the user explicitly requests a preview
+or dry run only, send and schedule nothing.
 
 ## Universal introduction
 
@@ -63,16 +68,10 @@ One curious, verified fact.
 🌱 Thought for the day
 One sentence that releases pressure rather than adding it.
 
-—
 Sources:
-[1] Source name — brief descriptor
-[2] Source name — brief descriptor
-[3] Source name — brief descriptor
-
-Full links (for verification, remove before publishing):
-[1] https://...
-[2] https://...
-[3] https://...
+[1] [Source name](https://...) — brief descriptor
+[2] [Source name](https://...) — brief descriptor
+[3] [Source name](https://...) — brief descriptor
 
 Kind of News — sent with love and verified links.
 ```
@@ -117,7 +116,8 @@ For each issue:
 7. Draft only after the evidence is complete.
 
 The source list must follow block order. The `Thought for the day` does not need
-a source. Keep full verification links in the separate links section.
+a source. Embed each source URL directly in its numbered source item, preferably
+as a Markdown link on the source name.
 
 ## Story selection
 
@@ -152,8 +152,8 @@ things:
 - observant rather than motivational.
 
 Use short sentences and varied rhythm. Use normal English capitalization. Do not
-use em dashes inside prose; use commas, periods, or parentheses instead. The
-standalone `—` separator before Sources is structural and allowed.
+use em dashes inside prose; use commas, periods, or parentheses instead. Do not
+add a standalone separator before Sources.
 
 Avoid corporate verbs such as `leverage`, `unpack`, `curate`, `elevate`,
 `amplify`, and `champion`. Avoid LinkedIn clichés, hashtag walls, motivational

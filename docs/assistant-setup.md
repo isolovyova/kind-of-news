@@ -38,7 +38,7 @@ When a user provides the public link or asks to install Kind of News:
    both `kind-of-news-setup` and `kind-of-news` from the `skills/` directory.
 2. Invoke `kind-of-news-setup` immediately. Do not end the response with only
    “installed”, “verified”, or “available next turn”.
-3. Begin with a short explanation of what Kind of News does, then ask exactly
+3. Use the approved welcome in `kind-of-news-setup` exactly, then ask exactly
    one channel question.
 
 If the host cannot invoke a newly installed skill in the same turn, say that
@@ -67,17 +67,28 @@ Then follow this order:
    connector or credential screen. Never ask the user to paste a token, OAuth
    secret, refresh token, bot token, or webhook URL into chat.
 3. Ask for timezone and delivery time. Confirm the resolved days, time, and
-   timezone in one short summary.
-4. Run a dry run. Research and validate a current issue, but do not send it.
-5. Show the dry-run issue and ask for explicit confirmation before the first
-   live delivery.
-6. Create the recurring task in the host only after the dry run passes and the
-   user confirms. The recurring task must invoke the installed editorial
-   `kind-of-news` skill
-   skill, preserve the four-block contract, and send through the authorized
-   channel without asking for approval on every run.
-7. Verify that the task is visible and active, and tell the user where to pause
-   or edit it.
+   timezone in one short summary, then ask exactly:
+
+   > Ready to start Kind of News? I’ll send your first issue now, then deliver
+   > it every [days] at [time] in [timezone] to [channel].
+
+4. Before that final confirmation, do not generate for delivery, schedule, or
+   send anything. After an affirmative answer, generate and validate the first
+   issue with current sources and the four-block contract.
+5. If validation fails, show the problem briefly, do not activate the schedule,
+   and do not send.
+6. After validation succeeds, activate the selected host schedule for
+   subsequent issues, then send issue #1 immediately through the connected
+   channel, even if today is not one of the selected days. Verify both actions.
+7. Report setup success only after schedule activation and the immediate send
+   both succeed. If either fails or cannot be verified, say setup is incomplete
+   and do not claim that recurring delivery is active.
+8. If the user explicitly asks for a preview or dry run, show the validated
+   issue and send and schedule nothing. This is opt-in, not a default prompt.
+
+After verified success, tell the user where issue #1 should appear. For Gmail,
+say “Check your email for Kind of News #YYYY-MM-DD.” Name the next scheduled
+delivery with its weekday, date, local time, and timezone.
 
 If the user asks for a channel that is not available in the current host,
 explain the closest supported option. Do not silently fall back to a different
@@ -122,7 +133,8 @@ Every run must:
 
 - use the current publication date as the issue ID;
 - research before drafting;
-- return a structured four-block issue with source URLs;
+- return a structured four-block issue with each factual source URL embedded in
+  its corresponding numbered Sources item;
 - stop before delivery if any factual block or source validation fails;
 - deliver the same validated issue to each selected channel;
 - avoid duplicates when the same issue ID has already succeeded for a channel;
@@ -138,10 +150,13 @@ Report “installed” only when all of these are true:
 - the skill is installed or loaded in the user's personal host scope;
 - the selected delivery account or connector is authorized without exposing a
   secret in chat;
-- the dry run produced a date-matched, four-block, source-validated issue;
-- the recurring task exists, is active, and shows the requested schedule;
-- the first real send happened only after explicit confirmation.
+- the first issue was date-matched, four-block, and source-validated;
+- the recurring task exists, is active, and shows the requested schedule for
+  subsequent issues;
+- issue #1 was sent immediately after the single final confirmation;
+- both schedule activation and the immediate send were verified before claiming
+  success.
 
 For the GitHub Actions fallback, use the separate workflow instructions in the
-root README. Do not mix that repo-backed flow into the default no-repository
-conversation.
+[`github-actions-setup.md`](github-actions-setup.md). Do not mix that repo-backed
+flow into the default no-repository conversation.
