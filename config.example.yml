@@ -17,3 +17,7 @@ delivery:
     - gmail
   # Used only when webhook is selected.
   webhook_provider: generic
+
+# Optional repository variable for Gmail delivery, not a secret:
+# GMAIL_FROM=newsishletter@gmail.com
+# It must already be verified as a Gmail Send As alias for the OAuth account.

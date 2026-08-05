@@ -6,21 +6,29 @@ not need to create a GitHub repository, configure Actions, or maintain code.
 ## One copy-paste message
 
 ```text
-Install the Kind of News plugin from https://github.com/isolovyova/kind-of-news and immediately start its setup tutorial in this same turn. Do not stop after saying installed. First explain in two sentences what Kind of News does, then ask me one question at a time. Do not ask me to create a GitHub repository. Use Monday/Wednesday/Friday at 06:00 in my timezone as defaults, keep secrets in the host's secure connection flow, run a dry run first, and create automatic delivery only after I confirm.
+Install the Kind of News plugin from https://github.com/isolovyova/kind-of-news and immediately start its setup tutorial in this same turn. Use the approved Kind of News welcome from the setup skill exactly, then ask me exactly one question at a time. Do not ask me to create a GitHub repository. Use Monday/Wednesday/Friday at 06:00 in my timezone as defaults, keep credentials in the host's secure connection flow, summarize my final channel and schedule choices, and ask: “Ready to start Kind of News? I’ll send your first issue now, then deliver it every [days] at [time] in [timezone] to [channel].” After I confirm, generate and validate the issue, activate recurring delivery for subsequent issues, and send issue #1 immediately even if today is not scheduled. Report success only after both the schedule and send succeed. If I explicitly ask for a preview or dry run, send and schedule nothing.
 ```
 
 The assistant should read [`assistant-setup.md`](assistant-setup.md), install the
 plugin or both skills, invoke `kind-of-news-setup`, explain the product, ask for
-channel/timezone/time, connect the channel, run a dry run, and create the host
-scheduler after confirmation. The user should never be asked for the URL of a
-new GitHub repository.
+channel/cadence/timezone/time, connect the channel, and ask the single final
+confirmation using the resolved configuration. After confirmation, it should
+generate and validate the issue, activate the host scheduler for subsequent
+issues, send issue #1 immediately, and verify both outcomes before reporting
+success. If the user explicitly asks for a preview or dry run, it sends and
+schedules nothing. The user should never be asked for the URL of a new GitHub
+repository. The first response is the approved welcome in
+`skills/kind-of-news-setup/SKILL.md`; it should not be shortened or replaced
+with a generic summary.
 
 ## Codex / ChatGPT
 
 In the Codex app, the assistant should install the Kind of News plugin and
-invoke the `kind-of-news-setup` entrypoint. After the dry run and confirmation,
+invoke the `kind-of-news-setup` entrypoint. After the single final confirmation,
 create a Codex recurring automation that invokes the `kind-of-news` editorial
-skill. The schedule belongs to the user's Codex account, not to GitHub.
+skill for subsequent issues, then send issue #1 immediately. Report success
+only after the automation is active and the immediate send is verified. The
+schedule belongs to the user's Codex account, not to GitHub.
 
 In ChatGPT, use a ChatGPT Scheduled Task. Scheduled Tasks are a ChatGPT
 feature, not the Codex app's scheduler. If the user is in Codex CLI or an IDE

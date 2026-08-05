@@ -43,6 +43,7 @@ def _make_delivery(channel: str, config: AppConfig, environ: Mapping[str, str]) 
             environ.get("GMAIL_CLIENT_SECRET", ""),
             environ.get("GMAIL_REFRESH_TOKEN", ""),
             environ.get("GMAIL_TO", ""),
+            sender=environ.get("GMAIL_FROM", ""),
         )
     if channel == "telegram":
         return TelegramDelivery(
@@ -127,12 +128,18 @@ def run(
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Generate and deliver a Kind of News issue")
+    parser = argparse.ArgumentParser(
+        description="Generate and deliver a Kind of News issue (advanced repo runner)"
+    )
     parser.add_argument("--config", default=None, help="Path to config.yml")
     parser.add_argument("--date", default=None, help="Issue date in YYYY-MM-DD")
     parser.add_argument("--skill", default="skills/kind-of-news/SKILL.md")
     parser.add_argument("--state-dir", default=".kind-of-news-state")
-    parser.add_argument("--dry-run", action="store_true", help="Render without delivery or state writes")
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Advanced repo-runner preview; render without delivery or state writes",
+    )
     parser.add_argument("--fixture", default=None, help="Render a validated issue JSON fixture without the API")
     return parser
 
