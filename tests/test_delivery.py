@@ -115,6 +115,7 @@ class DeliveryTests(unittest.TestCase):
         request = urlopen.call_args.args[0]
         self.assertEqual(request.get_header("Authorization"), "Token buttondown-secret")
         self.assertEqual(request.get_header("Content-type"), "application/json")
+        self.assertEqual(request.get_header("X-buttondown-live-dangerously"), "true")
         self.assertEqual(json.loads(request.data.decode("utf-8")), {"subject": "test"})
         self.assertEqual(result["status"], "sent")
 
