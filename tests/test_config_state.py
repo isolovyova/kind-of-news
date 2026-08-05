@@ -30,6 +30,28 @@ class ConfigAndStateTests(unittest.TestCase):
             config = load_config(str(path))
             self.assertEqual(missing_secret_names(config, {}), ["OPENAI_API_KEY", "WEBHOOK_URL"])
 
+    def test_buttondown_secret_is_required_only_from_secure_environment(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "config.yml"
+            path.write_text("delivery:\n  channels: [buttondown]\n", encoding="utf-8")
+            config = load_config(str(path))
+            self.assertEqual(
+                missing_secret_names(config, {}),
+                ["OPENAI_API_KEY", "BUTTONDOWN_API_KEY"],
+            )
+            self.assertEqual(
+                missing_secret_names(
+                    config,
+                    {"OPENAI_API_KEY": "openai", "BUTTONDOWN_API_KEY": "buttondown"},
+                ),
+                [],
+            )
+
+    def test_buttondown_delivery_reads_api_key_from_environment(self):
+        config = AppConfig(delivery=DeliveryConfig(channels=["buttondown"]))
+        delivery = _make_delivery("buttondown", config, {"BUTTONDOWN_API_KEY": "buttondown-secret"})
+        self.assertEqual(delivery._api_key, "buttondown-secret")
+
     def test_optional_gmail_from_is_passed_as_non_secret_delivery_setting(self):
         config = AppConfig(delivery=DeliveryConfig(channels=["gmail"]))
         delivery = _make_delivery(

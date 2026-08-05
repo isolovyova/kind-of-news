@@ -30,7 +30,7 @@ def _parse_channels(raw: str) -> List[str]:
     channels = [item.strip().lower() for item in raw.split(",") if item.strip()]
     unknown = set(channels) - ALLOWED_CHANNELS
     if unknown or not channels:
-        raise ValueError("channels must contain one or more of: gmail, telegram, webhook")
+        raise ValueError("channels must contain one or more of: buttondown, gmail, telegram, webhook")
     return list(dict.fromkeys(channels))
 
 
@@ -51,7 +51,7 @@ def build_config(channels: List[str], timezone: str, issue_time: str, provider: 
 
 
 def interactive_values() -> tuple:
-    channels = _parse_channels(input("Channels [gmail, telegram, webhook] (default: gmail): ").strip() or "gmail")
+    channels = _parse_channels(input("Channels [buttondown, gmail, telegram, webhook] (default: gmail): ").strip() or "gmail")
     timezone = input("Timezone (default: America/Vancouver): ").strip() or DEFAULT_TIMEZONE
     issue_time = input("Delivery time (default: 06:00): ").strip() or "06:00"
     provider = "generic"
@@ -94,7 +94,7 @@ def check_config(config_path: str) -> int:
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Set up Kind of News without handling secrets")
     parser.add_argument("--output", default="config.yml")
-    parser.add_argument("--channels", help="Comma-separated: gmail,telegram,webhook")
+    parser.add_argument("--channels", help="Comma-separated: buttondown,gmail,telegram,webhook")
     parser.add_argument("--timezone", default=DEFAULT_TIMEZONE)
     parser.add_argument("--time", dest="issue_time", default="06:00")
     parser.add_argument("--webhook-provider", default="generic")

@@ -8,20 +8,35 @@ can read the public Kind of News link.
 The public GitHub repository is a distribution page for the skill. An end user
 does not need to create, fork, clone, or maintain a GitHub repository.
 
+Kind of News has two deliberately separate paths:
+
+- **Branded newsletter:** ordinary readers subscribe at
+  <https://buttondown.com/kindofnews>. Buttondown owns the subscriber list and
+  email delivery. Do not install a personal connector, create an individual
+  schedule, or imply that the reader's Gmail sends this newsletter.
+- **Private digest:** a user who explicitly asks for a personal copy can use
+  the setup skill and a connected host channel. That path is personal-channel
+  delivery, not the branded newsletter.
+
 The assistant installs the Kind of News plugin or its two skills in the user's
-personal AI environment. The setup skill owns the tutorial; the editorial skill
-owns research and rendering. The selected host owns the recurring task,
-schedule, delivery authorization, and duplicate protection. GitHub Actions
-remains available as an advanced, repo-backed alternative, not the default
-onboarding path.
+personal AI environment only when the user asks for the private digest or is
+the newsletter author. The setup skill owns the tutorial; the editorial skill
+owns research and rendering. GitHub Actions remains an advanced,
+author-controlled publishing path for generating and publishing the branded
+newsletter, not a reader requirement or the default personal onboarding path.
 
 ## Start condition
 
 Treat either of these as an installation request:
 
-- the user provides `https://github.com/isolovyova/kind-of-news`;
-- the user says “install Kind of News”, “set up the news digest”, or asks for
-  recurring delivery.
+- the user provides `https://github.com/isolovyova/kind-of-news` and asks to
+  install/configure it, use a private digest, or maintain the newsletter;
+- the user explicitly asks to install Kind of News for a private digest, set up
+  a personal news digest, or asks for personal recurring delivery.
+
+If the user asks how to read or subscribe to Kind of News, direct them to
+<https://buttondown.com/kindofnews>. Do not turn a subscription request into a
+personal Gmail/Telegram setup or ask about an individual schedule.
 
 Do not start by explaining YAML, Python, GitHub Actions, OAuth scopes, or API
 schemas. Start as a setup guide and keep infrastructure details behind the
@@ -32,7 +47,8 @@ conversation.
 Installation and onboarding are separate operations. A successful installer
 message is not a completed setup.
 
-When a user provides the public link or asks to install Kind of News:
+When a user requests installation/configuration for a private digest or author
+workflow:
 
 1. Install the public plugin when the host supports plugins; otherwise install
    both `kind-of-news-setup` and `kind-of-news` from the `skills/` directory.
@@ -40,6 +56,10 @@ When a user provides the public link or asks to install Kind of News:
    “installed”, “verified”, or “available next turn”.
 3. Use the approved welcome in `kind-of-news-setup` exactly, then ask exactly
    one channel question.
+
+The approved welcome is for the explicit private-digest path. If the user has
+not asked for a private digest or author setup, use the Buttondown subscription
+path above instead.
 
 If the host cannot invoke a newly installed skill in the same turn, say that
    installation succeeded but start the setup wizard on the very next turn. Do
@@ -94,6 +114,14 @@ If the user asks for a channel that is not available in the current host,
 explain the closest supported option. Do not silently fall back to a different
 channel.
 
+Never present the private Gmail/Telegram/webhook path as the branded
+newsletter. The branded newsletter has one author-controlled recurring schedule:
+the author runner researches and validates the four-block issue, then calls
+Buttondown with `BUTTONDOWN_API_KEY` from the secure host/Actions secret store.
+Buttondown manages subscribers and sends the published email. No Buttondown
+draft is prepared manually in the normal author workflow, and the secret is
+never placed in `config.yml` or chat.
+
 ## Host rules
 
 ### Codex / ChatGPT
@@ -139,6 +167,11 @@ Every run must:
 - deliver the same validated issue to each selected channel;
 - avoid duplicates when the same issue ID has already succeeded for a channel;
 - retry only failed channels when the host supports per-channel state.
+
+For the branded newsletter, the author-controlled Buttondown run must complete
+the same research, four-block, and source-link validation before its publish
+request. A Buttondown response that does not confirm a queued or sent email is
+a failure; it must not be reported as published.
 
 The product creates LinkedIn-ready text but never auto-posts to LinkedIn.
 Publishing to LinkedIn remains the user's action.

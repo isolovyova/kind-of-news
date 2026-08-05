@@ -16,7 +16,7 @@ except ImportError:  # pragma: no cover - the runtime requirements install PyYAM
 DEFAULT_TIMEZONE = "America/Vancouver"
 DEFAULT_MODEL = "gpt-5.6-terra"
 DEFAULT_CHANNELS = ["gmail"]
-ALLOWED_CHANNELS = {"gmail", "telegram", "webhook"}
+ALLOWED_CHANNELS = {"buttondown", "gmail", "telegram", "webhook"}
 ALLOWED_WEBHOOK_PROVIDERS = {"generic", "slack", "discord", "ntfy"}
 
 
@@ -102,6 +102,8 @@ def required_secret_names(config: AppConfig) -> List[str]:
     names = ["OPENAI_API_KEY"]
     if "gmail" in config.delivery.channels:
         names.extend(["GMAIL_CLIENT_ID", "GMAIL_CLIENT_SECRET", "GMAIL_REFRESH_TOKEN", "GMAIL_TO"])
+    if "buttondown" in config.delivery.channels:
+        names.append("BUTTONDOWN_API_KEY")
     if "telegram" in config.delivery.channels:
         names.extend(["TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID"])
     if "webhook" in config.delivery.channels:
