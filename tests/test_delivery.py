@@ -66,7 +66,7 @@ class DeliveryTests(unittest.TestCase):
             calls[0][2]["body"],
         )
         self.assertNotIn("buttondown-secret", json.dumps(calls[0][2]))
-        self.assertNotIn('"status"', calls[0][2])
+        self.assertEqual(calls[0][2]["status"], "about_to_send")
 
     def test_buttondown_rejects_a_draft_response_as_false_success(self):
         calls = []
