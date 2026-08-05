@@ -1,0 +1,13 @@
+language: en
+timezone: America/Vancouver
+model: gpt-5.6-terra
+schedule:
+  days:
+  - monday
+  - wednesday
+  - friday
+  time: 06:00
+delivery:
+  channels:
+  - buttondown
+  webhook_provider: generic
