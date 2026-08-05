@@ -1,23 +1,26 @@
 # Advanced self-managed GitHub Actions setup
 
 This is an optional, repo-backed deployment path for users who explicitly want
-to own a GitHub repository, manage its secrets, and maintain its scheduled
-workflow. It is not required for the guided Codex or Claude Code setup.
+to own the Kind of News newsletter publishing workflow, manage its secrets, and
+maintain one author-controlled schedule. Ordinary readers should [subscribe to
+the branded newsletter on Buttondown](https://buttondown.com/kindofnews)
+instead. They do not need a repository, Actions, Gmail, or an individual
+schedule.
 
 ## Setup
 
 1. Create a repository from this template or fork this project.
-2. Open **Actions → Kind of News Setup → Run workflow**. Choose one or more
-   channels (`gmail`, `telegram`, or `webhook`), the timezone, local delivery
-   time, and a webhook provider when `webhook` is selected. The workflow writes
-   only the non-secret `config.yml` and commits it to the repository.
+2. Open **Actions → Kind of News Setup → Run workflow**. For the branded path,
+   choose `buttondown` as the channel, then choose the author-controlled
+   timezone and local publishing time. The workflow writes only the non-secret
+   `config.yml` and commits it to the repository.
 3. Add the required values as GitHub Actions Secrets. Never put them in
    `config.yml`, issues, logs, or chat.
 4. Run **Kind of News Setup** again. It checks the skill and credentials.
 5. Run **Actions → Kind of News → Run workflow** with the advanced
    repo-runner `dry-run` first. This preview intentionally sends nothing.
 6. Inspect the result. Choose `send` only after the dry run looks correct and
-   you have explicitly confirmed the first live delivery.
+   you have explicitly confirmed the first live publication.
 
 The checked-in scheduled workflow currently runs Monday, Wednesday, and Friday
 at 06:00 in `America/Vancouver`. Changing the setup workflow's time or timezone
@@ -31,10 +34,33 @@ activity, so delivery time is approximate and the Actions tab should be checked
 if a run is missing.
 
 This advanced runner's `dry-run` is different from the normal guided setup. In
-the guided setup, the assistant collects the configuration, asks one final
-confirmation, then validates the issue, activates recurring delivery for
-subsequent issues, and sends issue #1 immediately. It reports success only
-after both schedule activation and the immediate send succeed.
+the private guided setup, the assistant collects a user's personal channel and
+schedule, asks one final confirmation, then validates and sends a personal
+issue. The branded path has no individual reader schedule: the one Actions
+schedule belongs to the newsletter owner and each `send` run researches,
+validates, and publishes the issue to Buttondown subscribers.
+
+## Branded Buttondown path
+
+Set the non-secret configuration to use the author-controlled newsletter
+channel:
+
+```yaml
+delivery:
+  channels:
+    - buttondown
+```
+
+On each scheduled `send` run, the runner generates the current issue, validates
+the four content blocks and their factual source links, renders safe HTML, and
+calls Buttondown's email API. Buttondown owns subscriber management and email
+delivery. The runner does not create a manual draft in Buttondown for normal
+publishing; the API request queues the validated issue for subscribers.
+
+The public newsletter URL is
+<https://buttondown.com/kindofnews>. A personal Gmail, Telegram, or webhook
+configuration is a separate private-digest path and must never be described as
+the sender for the branded newsletter.
 
 ## Actions secrets
 
@@ -48,6 +74,15 @@ When Gmail is selected:
 - `GMAIL_CLIENT_SECRET`
 - `GMAIL_REFRESH_TOKEN`
 - `GMAIL_TO`
+
+When `buttondown` is selected for the branded newsletter:
+
+- `BUTTONDOWN_API_KEY`
+
+Store this API key only as a GitHub Actions Secret (or an equivalent secure
+host secret). Never put it in `config.yml`, a committed file, an issue, a log,
+or chat. The runner uses the key only for the Buttondown API request and does
+not expose it in the payload or user-facing status.
 
 ### Optional Gmail sender alias
 
@@ -84,8 +119,10 @@ chat or commit it.
 - Gmail sends the complete issue as an email.
 - Telegram sends the complete issue as plain text through a bot.
 - Webhook supports `generic`, `slack`, `discord`, and `ntfy` payloads.
+- Buttondown publishes the validated branded issue to its existing subscriber
+  list; it does not use a personal Gmail sender or reader-specific schedule.
 
-The issue is sent only after structured-output and source validation. Each
+The issue is published only after structured-output and source validation. Each
 numbered Sources item contains its direct source URL as a link; there is no
 separate verification-links section. The publication date is the issue ID. If
 a channel already succeeded for that ID, it is not sent again. If a channel

@@ -11,7 +11,7 @@ from typing import Any, Dict, Mapping, Optional, Sequence
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from .config import AppConfig, ConfigError, load_config
-from .delivery import DeliveryError, GmailDelivery, TelegramDelivery, WebhookDelivery
+from .delivery import ButtondownDelivery, DeliveryError, GmailDelivery, TelegramDelivery, WebhookDelivery
 from .models import NewsIssue
 from .openai_client import OpenAIRuntimeError, ResponsesClient
 from .prompts import load_skill_text
@@ -37,6 +37,8 @@ def issue_date_for(config: AppConfig, requested: Optional[str] = None) -> str:
 
 
 def _make_delivery(channel: str, config: AppConfig, environ: Mapping[str, str]) -> Any:
+    if channel == "buttondown":
+        return ButtondownDelivery(environ.get("BUTTONDOWN_API_KEY", ""))
     if channel == "gmail":
         return GmailDelivery(
             environ.get("GMAIL_CLIENT_ID", ""),

@@ -16,13 +16,20 @@ scream. The default cadence is Monday, Wednesday, and Friday. The default output
 is English and is suitable for a LinkedIn post, email, Telegram message, or
 generic webhook.
 
+The public branded newsletter is published to
+<https://buttondown.com/kindofnews>. Ordinary readers subscribe there;
+Buttondown manages subscribers and email delivery. A personal Gmail,
+Telegram, or webhook delivery is a separate private-digest path and must never
+be described as sending the branded newsletter.
+
 ## Setup handoff
 
-This file is the editorial engine, not the installation wizard. When the user
-provides the public GitHub URL, asks to install or configure Kind of News, or
-asks for recurring delivery, invoke the sibling `kind-of-news-setup` skill
-first. Do not stop at an installation confirmation and do not ask the user to
-create a GitHub repository.
+This file is the editorial engine, not the installation wizard. When a user
+asks to install or configure Kind of News for a private digest, or asks for
+private recurring delivery, invoke the sibling `kind-of-news-setup` skill
+first. If an ordinary reader only wants the branded newsletter, direct them to
+<https://buttondown.com/kindofnews> instead. Do not stop at an installation
+confirmation and do not ask the user to create a GitHub repository.
 
 When the setup skill is unavailable, run its essential handoff yourself: give
 the approved welcome, ask one channel question, keep credentials in the host's
@@ -165,6 +172,14 @@ lowercase hashtags only when explicitly requested.
 The host scheduler or repository runner may load this file as its generation
 policy. It must preserve the structure and evidence rules above, produce a
 structured issue before rendering channel text, and send only after validation.
+
+For the branded newsletter, the author-controlled runner must research,
+validate, and render the issue before publishing it through the Buttondown API.
+Use one author-controlled recurring schedule, not individual reader schedules.
+The `BUTTONDOWN_API_KEY` belongs only in the secure host or GitHub Actions
+secret store. The normal publishing path calls Buttondown directly; it does
+not create a manual draft in the Buttondown web app and does not use a
+personal Gmail sender.
 
 When asked to configure Kind of News, install the skill and use the host's
 one-time setup flow. Never ask a user to paste API keys or OAuth tokens into

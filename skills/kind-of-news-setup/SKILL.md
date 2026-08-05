@@ -14,18 +14,35 @@ Run the user-facing onboarding wizard for Kind of News. This is the entrypoint
 skill. The sibling `kind-of-news` skill is the editorial engine that researches
 and writes each issue.
 
+## Branded newsletter versus private digest
+
+Kind of News is also a branded public newsletter. If an ordinary reader asks
+how to read or subscribe, direct them to
+<https://buttondown.com/kindofnews>. Buttondown owns the subscriber list and
+email delivery. Do not ask that reader to connect Gmail, Telegram, or another
+personal channel, create an individual schedule, or create a repository.
+
+The wizard below is for a user who explicitly asks for a private digest in a
+connected channel. It is not the branded newsletter path. A newsletter author
+uses the advanced, author-controlled GitHub Actions workflow, which generates
+and validates an issue and publishes it to Buttondown using `BUTTONDOWN_API_KEY`
+from secure host/Actions secret storage. Never request or place that secret in
+chat or a config file.
+
 ## Installation handoff
 
-When this skill is activated by a GitHub-link or installation request, do not
-stop at “installed”, “verified”, or “available next turn”. Begin the tutorial
-in the same response whenever the host allows it. If an installer has just
-finished, continue with the welcome message below instead of asking the user to
-invoke another command manually.
+When this skill is activated by an explicit private-digest or author
+installation request, do not stop at “installed”, “verified”, or “available
+next turn”. Begin the tutorial in the same response whenever the host allows
+it. If an installer has just finished, continue with the welcome message below
+instead of asking the user to invoke another command manually. A reader who
+only wants the public newsletter belongs on the Buttondown subscription path
+above, not in this wizard.
 
 If the host cannot invoke a newly installed skill in the current turn, the next
 turn must begin with this tutorial. Do not claim that the automation is set up.
 
-## First response
+## First response for the private-digest path
 
 Use this response exactly. It contains the one required question:
 

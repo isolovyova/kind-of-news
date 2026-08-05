@@ -12,11 +12,15 @@ schedule:
   time: "06:00"
 
 delivery:
-  # Choose one or more: gmail, telegram, webhook.
+  # Choose one or more: buttondown, gmail, telegram, webhook.
   channels:
     - gmail
   # Used only when webhook is selected.
   webhook_provider: generic
+
+# For the branded newsletter, use delivery.channels: [buttondown].
+# The API key is supplied by the secure host or GitHub Actions secret store and
+# must never be written to config.yml or pasted into chat.
 
 # Optional repository variable for Gmail delivery, not a secret:
 # GMAIL_FROM=newsishletter@gmail.com
