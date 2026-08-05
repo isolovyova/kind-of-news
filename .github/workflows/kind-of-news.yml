@@ -1,10 +1,7 @@
 name: Kind of News
 
+# Automatic delivery is paused until the owner explicitly re-enables this schedule.
 on:
-  schedule:
-    # GitHub may delay scheduled runs during high-load periods.
-    - cron: "0 6 * * 1,3,5"
-      timezone: "America/Vancouver"
   workflow_dispatch:
     inputs:
       mode:
