@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Repository-local skill validation for CI and user setup checks."""
+"""Repository-local skill validation for CI and local checks."""
 
 from __future__ import annotations
 
