@@ -1,7 +1,7 @@
 {
   "name": "kind-of-news",
-  "version": "1.1.0",
-  "description": "A guided setup wizard and editorial skill for a warm, fact-checked news digest delivered three times a week.",
+  "version": "1.1.1",
+  "description": "A guided setup wizard and editorial skill for a warm, fact-checked news digest with optional delivery.",
   "author": {
     "name": "Iryna Solovyova",
     "url": "https://github.com/isolovyova"
@@ -20,7 +20,7 @@
   "interface": {
     "displayName": "Kind of News",
     "shortDescription": "Set up a warm news digest in one guided flow",
-    "longDescription": "Install Kind of News, learn what it does, choose a delivery channel, run a validated dry run, and turn on automatic Monday/Wednesday/Friday delivery.",
+    "longDescription": "Install Kind of News, learn what it does, choose a personal delivery channel, and follow the guided setup. The public Buttondown publication is an advanced author-controlled path currently paused pending final verification.",
     "developerName": "Iryna Solovyova",
     "category": "Productivity",
     "capabilities": [

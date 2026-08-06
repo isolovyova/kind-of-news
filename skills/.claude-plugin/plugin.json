@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "kind-of-news",
+  "displayName": "Kind of News",
+  "version": "1.1.1",
+  "description": "A guided setup wizard and editorial skill for a warm, fact-checked news digest.",
+  "author": {
+    "name": "Iryna Solovyova",
+    "url": "https://github.com/isolovyova"
+  },
+  "homepage": "https://github.com/isolovyova/kind-of-news",
+  "repository": "https://github.com/isolovyova/kind-of-news",
+  "license": "MIT",
+  "skills": "./"
+}
