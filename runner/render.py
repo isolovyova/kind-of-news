@@ -44,8 +44,13 @@ def _html_text(value: str) -> str:
     return escape(value).replace("\n", "<br>\n")
 
 
-def render_html(issue: NewsIssue) -> str:
-    """Render a safe HTML alternative with clickable validated source links."""
+def render_html(
+    issue: NewsIssue,
+    *,
+    include_issue_title: bool = True,
+    footer: str = "Kind of News — sent with love and verified links.",
+) -> str:
+    """Render safe HTML with clickable validated source links."""
 
     header = "📅 On this day" if issue.current_header == "on_this_day" else "⚡ Happening now"
     source_items = []
@@ -64,11 +69,14 @@ def render_html(issue: NewsIssue) -> str:
             "<li>%s &mdash; %s</li>" % (source_name, _html_text(source.descriptor))
         )
 
-    return "\n".join(
+    lines = [
+        "<!doctype html>",
+        "<html><body>",
+    ]
+    if include_issue_title:
+        lines.append("<h1>Kind of News #%s</h1>" % escape(issue.issue_id))
+    lines.extend(
         [
-            "<!doctype html>",
-            "<html><body>",
-            "<h1>Kind of News #%s</h1>" % escape(issue.issue_id),
             "<p>The world is noisy. This is a small, warm window into the parts that don't scream.</p>",
             "<h2>☀️ Good thing</h2>",
             "<p>%s</p>" % _html_text(issue.good_thing),
@@ -80,10 +88,11 @@ def render_html(issue: NewsIssue) -> str:
             "<p>%s</p>" % _html_text(issue.thought),
             "<h2>Sources</h2>",
             "<ol>\n%s\n</ol>" % "\n".join(source_items),
-            "<p>Kind of News — sent with love and verified links.</p>",
+            "<p>%s</p>" % _html_text(footer),
             "</body></html>",
         ]
     )
+    return "\n".join(lines)
 
 
 def webhook_payload(issue: NewsIssue, provider: str) -> Dict[str, Any]:
