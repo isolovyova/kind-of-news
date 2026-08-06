@@ -7,6 +7,10 @@ the branded newsletter on Buttondown](https://buttondown.com/kindofnews)
 instead. They do not need a repository, Actions, Gmail, or an individual
 schedule.
 
+Automatic branded delivery is intentionally paused in the public workflow while
+the owner completes final verification. Until the owner re-enables a schedule,
+the workflow supports only an explicitly started dry run or live `send`.
+
 ## Setup
 
 1. Create a repository from this template or fork this project.
@@ -20,13 +24,16 @@ schedule.
 5. Run **Actions → Kind of News → Run workflow** with the advanced
    repo-runner `dry-run` first. This preview intentionally sends nothing.
 6. Inspect the result. Choose `send` only after the dry run looks correct and
-   you have explicitly confirmed the first live publication.
+   you have explicitly confirmed the first live publication. Keep the recurring
+   schedule disabled until that publication and its receipt are verified.
 
-The checked-in scheduled workflow currently runs Monday, Wednesday, and Friday
-at 06:00 in `America/Vancouver`. Changing the setup workflow's time or timezone
-writes those values to `config.yml`, but does not rewrite the schedule block in
-`.github/workflows/kind-of-news.yml`; update that workflow too before relying on
-a different recurring time.
+The checked-in workflow is currently manual-only: automatic delivery is paused
+and there is no active `schedule` trigger. The intended cadence, once enabled,
+is Monday, Wednesday, and Friday at 06:00 in `America/Vancouver`. Changing the
+setup workflow's time or timezone writes those values to `config.yml`, but does
+not create or rewrite a schedule block in
+`.github/workflows/kind-of-news.yml`; after final verification, the owner must
+re-enable and review that block before relying on recurring delivery.
 
 GitHub scheduled workflows can be delayed during high-load periods. In public
 repositories they can also be disabled after 60 days without repository
@@ -51,11 +58,11 @@ delivery:
     - buttondown
 ```
 
-On each scheduled `send` run, the runner generates the current issue, validates
-the four content blocks and their factual source links, renders safe HTML, and
-calls Buttondown's email API. Buttondown owns subscriber management and email
-delivery. The runner does not create a manual draft in Buttondown for normal
-publishing; the API request queues the validated issue for subscribers.
+When the owner starts a `send` run, the runner generates the current issue,
+validates the four content blocks and their factual source links, renders safe
+HTML, and calls Buttondown's email API. Buttondown owns subscriber management
+and email delivery. The runner does not create a manual draft in Buttondown for
+normal publishing; the API request queues the validated issue for subscribers.
 
 The public newsletter URL is
 <https://buttondown.com/kindofnews>. A personal Gmail, Telegram, or webhook
