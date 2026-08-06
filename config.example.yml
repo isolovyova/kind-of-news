@@ -1,5 +1,4 @@
-# Non-secret settings for the Kind of News runner.
-# Copy this file to config.yml and edit delivery.channels during one-time setup.
+# Non-secret settings for the automated Kind of News runner.
 language: en
 timezone: America/Vancouver
 model: gpt-5.6-terra
@@ -12,16 +11,8 @@ schedule:
   time: "06:00"
 
 delivery:
-  # Choose one or more: buttondown, gmail, telegram, webhook.
   channels:
-    - gmail
-  # Used only when webhook is selected.
-  webhook_provider: generic
+    - buttondown
 
-# For the branded newsletter, use delivery.channels: [buttondown].
-# The API key is supplied by the secure host or GitHub Actions secret store and
-# must never be written to config.yml or pasted into chat.
-
-# Optional repository variable for Gmail delivery, not a secret:
-# GMAIL_FROM=newsishletter@gmail.com
-# It must already be verified as a Gmail Send As alias for the OAuth account.
+# BUTTONDOWN_API_KEY is supplied by secure host or GitHub Actions secret
+# storage. Never write it to this file or paste it into chat.

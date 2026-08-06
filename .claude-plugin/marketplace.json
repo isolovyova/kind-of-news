@@ -5,8 +5,8 @@
     "name": "Iryna Solovyova"
   },
   "metadata": {
-    "description": "A guided setup wizard and editorial skill for a warm, fact-checked news digest.",
-    "version": "1.1.1"
+    "description": "A private, on-demand skill for warm, fact-checked Kind of News issues.",
+    "version": "0.1.0"
   },
   "plugins": [
     {
@@ -16,8 +16,8 @@
         "url": "https://github.com/isolovyova/kind-of-news.git",
         "path": "skills"
       },
-      "description": "Install the setup wizard and editorial skill for a warm, fact-checked news digest. The public Buttondown publication is an advanced author-controlled path.",
-      "version": "1.1.1",
+      "description": "Generate and validate one personalized Kind of News issue on demand.",
+      "version": "0.1.0",
       "homepage": "https://github.com/isolovyova/kind-of-news",
       "repository": "https://github.com/isolovyova/kind-of-news",
       "license": "MIT",

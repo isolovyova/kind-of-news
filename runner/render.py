@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from html import escape
-from typing import Any, Dict, List
 from urllib.parse import urlparse
 
 from .models import BLOCK_ORDER, NewsIssue
@@ -47,8 +46,8 @@ def _html_text(value: str) -> str:
 def render_html(
     issue: NewsIssue,
     *,
-    include_issue_title: bool = True,
-    footer: str = "Kind of News — sent with love and verified links.",
+    include_issue_title: bool = False,
+    footer: str = "Sent with love and verified links.",
 ) -> str:
     """Render safe HTML with clickable validated source links."""
 
@@ -93,38 +92,3 @@ def render_html(
         ]
     )
     return "\n".join(lines)
-
-
-def webhook_payload(issue: NewsIssue, provider: str) -> Dict[str, Any]:
-    text = render_markdown(issue)
-    title = "Kind of News #%s" % issue.issue_id
-    if provider == "slack":
-        return {"text": text}
-    if provider == "discord":
-        return {"content": text}
-    if provider == "ntfy":
-        return {"text": text, "title": title}
-    return {
-        "title": title,
-        "issue_id": issue.issue_id,
-        "text": text,
-        "sources": [source.to_dict() for source in issue.sources],
-    }
-
-
-def split_text(text: str, limit: int = 4096) -> List[str]:
-    """Split long Telegram content without cutting a line where possible."""
-
-    if len(text) <= limit:
-        return [text]
-    chunks: List[str] = []
-    remaining = text
-    while len(remaining) > limit:
-        boundary = remaining.rfind("\n", 0, limit + 1)
-        if boundary < limit // 2:
-            boundary = limit
-        chunks.append(remaining[:boundary].rstrip())
-        remaining = remaining[boundary:].lstrip()
-    if remaining:
-        chunks.append(remaining)
-    return chunks

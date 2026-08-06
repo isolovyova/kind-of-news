@@ -1,1 +1,1 @@
-"""User-facing setup helpers."""
+"""Repository validation helpers."""
