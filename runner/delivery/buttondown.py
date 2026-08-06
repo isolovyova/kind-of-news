@@ -68,15 +68,10 @@ class ButtondownDelivery:
         payload = {
             "subject": "Kind of News #%s" % issue.issue_id,
             "body": "<!-- buttondown-editor-mode: fancy -->\n"
-            + render_html(
-                issue,
-                include_issue_title=False,
-                footer="Sent with love and verified links.",
-            ),
+            + render_html(issue),
             "slug": "kind-of-news-%s" % issue.issue_id,
-            # Buttondown now safely defaults API-created emails to drafts.  A
-            # live Kind of News run is explicitly user-confirmed, so put the
-            # validated issue into Buttondown's send queue instead.
+            # Buttondown safely defaults API-created emails to drafts. The
+            # scheduled runner validates the issue before queueing it.
             "status": "about_to_send",
         }
         try:
