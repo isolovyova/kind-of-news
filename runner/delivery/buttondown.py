@@ -27,6 +27,10 @@ def _post_buttondown(url: str, api_key: str, payload: Dict[str, Any]) -> Dict[st
             "Authorization": "Token " + api_key,
             "Content-Type": "application/json",
             "Accept": "application/json",
+            # Buttondown's current API requires an explicit, per-key
+            # confirmation before the first live send.  This adapter is only
+            # invoked by the explicit send path, never by dry-run.
+            "X-Buttondown-Live-Dangerously": "true",
         },
         method="POST",
     )
@@ -63,11 +67,11 @@ class ButtondownDelivery:
 
         payload = {
             "subject": "Kind of News #%s" % issue.issue_id,
-            "body": "<!-- buttondown-editor-mode: fancy -->\n" + render_html(issue),
+            "body": "<!-- buttondown-editor-mode: fancy -->\n"
+            + render_html(issue),
             "slug": "kind-of-news-%s" % issue.issue_id,
-            # Buttondown now safely defaults API-created emails to drafts. A
-            # live Kind of News run is explicitly user-confirmed, so queue the
-            # validated issue for sending instead.
+            # Buttondown safely defaults API-created emails to drafts. The
+            # scheduled runner validates the issue before queueing it.
             "status": "about_to_send",
         }
         try:
@@ -81,3 +85,4 @@ class ButtondownDelivery:
         if response.get("status") not in QUEUED_STATUSES:
             raise DeliveryError("Buttondown did not confirm that the email was queued for delivery")
         return DeliveryResult(channel="buttondown", delivered=True, detail="published to subscribers")
+sed: --: No such file or directory

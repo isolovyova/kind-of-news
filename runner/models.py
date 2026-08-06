@@ -1,3 +1,4 @@
+sed: --: No such file or directory
 """Typed issue models shared by generation, validation, and delivery."""
 
 from __future__ import annotations

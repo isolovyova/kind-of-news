@@ -1,3 +1,4 @@
+sed: --: No such file or directory
 """Command-line application for generation, validation, and delivery."""
 
 from __future__ import annotations
@@ -7,11 +8,11 @@ import json
 import os
 from datetime import date, datetime
 from pathlib import Path
-from typing import Any, Dict, Mapping, Optional, Sequence
+from typing import Any, Mapping, Optional, Sequence
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from .config import AppConfig, ConfigError, load_config
-from .delivery import ButtondownDelivery, DeliveryError, GmailDelivery, TelegramDelivery, WebhookDelivery
+from .delivery import ButtondownDelivery, DeliveryError
 from .models import NewsIssue
 from .openai_client import OpenAIRuntimeError, ResponsesClient
 from .prompts import load_skill_text
@@ -39,24 +40,6 @@ def issue_date_for(config: AppConfig, requested: Optional[str] = None) -> str:
 def _make_delivery(channel: str, config: AppConfig, environ: Mapping[str, str]) -> Any:
     if channel == "buttondown":
         return ButtondownDelivery(environ.get("BUTTONDOWN_API_KEY", ""))
-    if channel == "gmail":
-        return GmailDelivery(
-            environ.get("GMAIL_CLIENT_ID", ""),
-            environ.get("GMAIL_CLIENT_SECRET", ""),
-            environ.get("GMAIL_REFRESH_TOKEN", ""),
-            environ.get("GMAIL_TO", ""),
-            sender=environ.get("GMAIL_FROM", ""),
-        )
-    if channel == "telegram":
-        return TelegramDelivery(
-            environ.get("TELEGRAM_BOT_TOKEN", ""),
-            environ.get("TELEGRAM_CHAT_ID", ""),
-        )
-    if channel == "webhook":
-        return WebhookDelivery(
-            environ.get("WEBHOOK_URL", ""),
-            config.delivery.webhook_provider,
-        )
     raise RunnerError("Unsupported delivery channel: %s" % channel)
 
 

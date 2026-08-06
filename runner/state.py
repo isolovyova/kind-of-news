@@ -42,3 +42,4 @@ class StateStore:
     def mark_sent(self, channel: str) -> None:
         self.root.mkdir(parents=True, exist_ok=True)
         (self.root / (channel + ".sent")).write_text("ok\n", encoding="utf-8")
+sed: --: No such file or directory

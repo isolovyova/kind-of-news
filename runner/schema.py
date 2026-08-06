@@ -1,3 +1,4 @@
+sed: --: No such file or directory
 """JSON schemas used for Responses API structured output."""
 
 from __future__ import annotations

@@ -1,7 +1,7 @@
 {
   "name": "kind-of-news",
-  "version": "1.1.0",
-  "description": "A guided setup wizard and editorial skill for a warm, fact-checked news digest delivered three times a week.",
+  "version": "0.1.0",
+  "description": "A private, on-demand skill for warm, fact-checked Kind of News issues.",
   "author": {
     "name": "Iryna Solovyova",
     "url": "https://github.com/isolovyova"
@@ -12,15 +12,15 @@
   "keywords": [
     "news",
     "digest",
-    "onboarding",
-    "automation",
-    "fact-checking"
+    "research",
+    "fact-checking",
+    "writing"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Kind of News",
-    "shortDescription": "Set up a warm news digest in one guided flow",
-    "longDescription": "Install Kind of News, learn what it does, choose a delivery channel, run a validated dry run, and turn on automatic Monday/Wednesday/Friday delivery.",
+    "shortDescription": "Generate a warm, fact-checked issue on demand",
+    "longDescription": "Install Kind of News in Codex or Claude Code to research, validate, and display one personalized four-block issue on demand.",
     "developerName": "Iryna Solovyova",
     "category": "Productivity",
     "capabilities": [
@@ -30,10 +30,11 @@
     ],
     "websiteURL": "https://github.com/isolovyova/kind-of-news",
     "defaultPrompt": [
-      "Start the Kind of News setup tutorial",
-      "Set up my Monday/Wednesday/Friday digest",
-      "Run a dry run of Kind of News"
+      "Generate a personalized Kind of News issue for me now",
+      "Research and validate a four-block Kind of News issue",
+      "Save this Kind of News issue locally"
     ],
     "brandColor": "#F59E0B"
   }
 }
+sed: --: No such file or directory

@@ -1,0 +1,16 @@
+sed: --: No such file or directory
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "kind-of-news",
+  "displayName": "Kind of News",
+  "version": "0.1.0",
+  "description": "A private, on-demand skill for warm, fact-checked Kind of News issues.",
+  "author": {
+    "name": "Iryna Solovyova",
+    "url": "https://github.com/isolovyova"
+  },
+  "homepage": "https://github.com/isolovyova/kind-of-news",
+  "repository": "https://github.com/isolovyova/kind-of-news",
+  "license": "MIT",
+  "skills": "./"
+}
