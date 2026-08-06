@@ -1,4 +1,3 @@
-sed: --: No such file or directory
 """Command-line application for generation, validation, and delivery."""
 
 from __future__ import annotations

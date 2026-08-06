@@ -68,4 +68,3 @@ Sources:
 ## License
 
 MIT. See [LICENSE](LICENSE).
-sed: --: No such file or directory

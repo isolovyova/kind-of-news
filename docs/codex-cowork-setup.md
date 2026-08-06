@@ -1,4 +1,3 @@
-sed: --: No such file or directory
 # Install Kind of News for private use
 
 Readers should subscribe at <https://buttondown.com/kindofnews>. Use this

@@ -1,4 +1,3 @@
-sed: --: No such file or directory
 """Configuration loading with safe defaults and no credential storage."""
 
 from __future__ import annotations

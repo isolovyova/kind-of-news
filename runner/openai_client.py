@@ -141,4 +141,3 @@ class ResponsesClient:
         issue = NewsIssue.from_mapping(parse_json_response(compose_response))
         validate_issue(issue, expected_date=issue_date, citation_urls=citation_urls)
         return issue, citation_urls
-sed: --: No such file or directory

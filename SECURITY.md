@@ -1,4 +1,3 @@
-sed: --: No such file or directory
 # Security
 
 The automated newsletter runner requires `OPENAI_API_KEY` for generation and

@@ -100,4 +100,3 @@ jobs:
         with:
           path: .kind-of-news-state
           key: kind-of-news-state-${{ steps.issue.outputs.date }}
-sed: --: No such file or directory

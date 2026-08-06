@@ -92,4 +92,3 @@ def render_html(
         ]
     )
     return "\n".join(lines)
-sed: --: No such file or directory

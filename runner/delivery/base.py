@@ -1,4 +1,3 @@
-sed: --: No such file or directory
 """Shared delivery result and error types."""
 
 from __future__ import annotations

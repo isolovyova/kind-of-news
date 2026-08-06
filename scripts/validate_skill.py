@@ -1,4 +1,3 @@
-sed: --: No such file or directory
 #!/usr/bin/env python3
 """Repository-local skill validation for CI and local checks."""
 

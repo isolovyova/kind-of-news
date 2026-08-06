@@ -1,4 +1,3 @@
-sed: --: No such file or directory
 """Fail-closed validation for generated issues."""
 
 from __future__ import annotations

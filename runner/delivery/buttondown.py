@@ -85,4 +85,3 @@ class ButtondownDelivery:
         if response.get("status") not in QUEUED_STATUSES:
             raise DeliveryError("Buttondown did not confirm that the email was queued for delivery")
         return DeliveryResult(channel="buttondown", delivered=True, detail="published to subscribers")
-sed: --: No such file or directory

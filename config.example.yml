@@ -1,4 +1,3 @@
-sed: --: No such file or directory
 # Non-secret settings for the automated Kind of News runner.
 language: en
 timezone: America/Vancouver

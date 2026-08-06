@@ -10,4 +10,3 @@ schedule:
 delivery:
   channels:
   - buttondown
-sed: --: No such file or directory

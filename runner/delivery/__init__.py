@@ -1,4 +1,3 @@
-sed: --: No such file or directory
 """Delivery adapters for Kind of News output."""
 
 from .base import DeliveryError, DeliveryResult
