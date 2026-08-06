@@ -121,6 +121,8 @@ chat or commit it.
 - Webhook supports `generic`, `slack`, `discord`, and `ntfy` payloads.
 - Buttondown publishes the validated branded issue to its existing subscriber
   list; it does not use a personal Gmail sender or reader-specific schedule.
+  Buttondown supplies the header/date, so the generated HTML body omits a
+  repeated issue title and ends with `Sent with love and verified links.`
 
 The issue is published only after structured-output and source validation. Each
 numbered Sources item contains its direct source URL as a link; there is no
