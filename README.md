@@ -14,8 +14,9 @@ If you are here as a reader, [subscribe to Kind of News on
 Buttondown](https://buttondown.com/kindofnews). Buttondown manages the
 subscriber list and delivery. The intended cadence is Mondays, Wednesdays, and
 Fridays, but recurring delivery is currently paused while the owner completes
-final verification. One good thing, one curiosity, one tiny fact, one thought.
-No hustle, no politics, no takes.
+final verification. The owner is preparing one evergreen Welcome Issue for
+newly confirmed subscribers; it is not active yet. One good thing, one
+curiosity, one tiny fact, one thought. No hustle, no politics, no takes.
 
 ## Start in Codex or Claude Code
 
@@ -35,6 +36,7 @@ Install Kind of News from https://github.com/isolovyova/kind-of-news and start t
 ## More detail
 
 - [Assistant setup](docs/assistant-setup.md)
+- [Buttondown Welcome Issue handoff](docs/buttondown-welcome-issue.md)
 - [Editorial rules](skills/kind-of-news/SKILL.md)
 
 ## License
