@@ -68,6 +68,22 @@ class RenderTests(unittest.TestCase):
             rendered,
         )
 
+    def test_html_renderer_can_remove_repeated_title_and_branding(self):
+        rendered = render_html(
+            self.issue,
+            include_issue_title=False,
+            footer="Sent with love and verified links.",
+        )
+
+        self.assertNotIn("<h1>Kind of News #2026-08-03</h1>", rendered)
+        self.assertNotIn("Kind of News — sent with love and verified links.", rendered)
+        self.assertIn("<p>Sent with love and verified links.</p>", rendered)
+        self.assertIn("☀️ Good thing", rendered)
+        self.assertIn(
+            '<a href="https://example.com/kind-of-news/good-thing">Example source</a>',
+            rendered,
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
