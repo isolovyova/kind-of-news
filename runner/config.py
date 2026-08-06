@@ -5,7 +5,7 @@ from __future__ import annotations
 import os
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Dict, List, Mapping, Optional
+from typing import Any, List, Mapping, Optional
 
 try:
     import yaml
@@ -15,15 +15,13 @@ except ImportError:  # pragma: no cover - the runtime requirements install PyYAM
 
 DEFAULT_TIMEZONE = "America/Vancouver"
 DEFAULT_MODEL = "gpt-5.6-terra"
-DEFAULT_CHANNELS = ["gmail"]
-ALLOWED_CHANNELS = {"buttondown", "gmail", "telegram", "webhook"}
-ALLOWED_WEBHOOK_PROVIDERS = {"generic", "slack", "discord", "ntfy"}
+DEFAULT_CHANNELS = ["buttondown"]
+ALLOWED_CHANNELS = {"buttondown"}
 
 
 @dataclass(frozen=True)
 class DeliveryConfig:
     channels: List[str] = field(default_factory=lambda: list(DEFAULT_CHANNELS))
-    webhook_provider: str = "generic"
 
 
 @dataclass(frozen=True)
@@ -59,6 +57,8 @@ def load_config(path: Optional[str] = None) -> AppConfig:
 
     schedule = _as_mapping(raw.get("schedule"))
     delivery = _as_mapping(raw.get("delivery"))
+    if "webhook_provider" in delivery:
+        raise ConfigError("delivery.webhook_provider is no longer supported")
     channels = delivery.get("channels", DEFAULT_CHANNELS)
     if isinstance(channels, str):
         channels = [channels]
@@ -68,12 +68,8 @@ def load_config(path: Optional[str] = None) -> AppConfig:
     unknown_channels = set(normalized_channels) - ALLOWED_CHANNELS
     if unknown_channels:
         raise ConfigError("Unsupported channel(s): %s" % ", ".join(sorted(unknown_channels)))
-    if not normalized_channels:
-        raise ConfigError("Choose at least one delivery channel")
-
-    webhook_provider = str(delivery.get("webhook_provider", "generic")).strip().lower()
-    if webhook_provider not in ALLOWED_WEBHOOK_PROVIDERS:
-        raise ConfigError("Unsupported webhook provider: %s" % webhook_provider)
+    if normalized_channels != ["buttondown"]:
+        raise ConfigError("delivery.channels must contain only buttondown")
 
     timezone = str(raw.get("timezone", DEFAULT_TIMEZONE)).strip()
     issue_time = str(schedule.get("time", "06:00")).strip()
@@ -93,22 +89,12 @@ def load_config(path: Optional[str] = None) -> AppConfig:
         model=environment_model or configured_model or DEFAULT_MODEL,
         delivery=DeliveryConfig(
             channels=normalized_channels,
-            webhook_provider=webhook_provider,
         ),
     )
 
 
 def required_secret_names(config: AppConfig) -> List[str]:
-    names = ["OPENAI_API_KEY"]
-    if "gmail" in config.delivery.channels:
-        names.extend(["GMAIL_CLIENT_ID", "GMAIL_CLIENT_SECRET", "GMAIL_REFRESH_TOKEN", "GMAIL_TO"])
-    if "buttondown" in config.delivery.channels:
-        names.append("BUTTONDOWN_API_KEY")
-    if "telegram" in config.delivery.channels:
-        names.extend(["TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID"])
-    if "webhook" in config.delivery.channels:
-        names.append("WEBHOOK_URL")
-    return names
+    return ["OPENAI_API_KEY", "BUTTONDOWN_API_KEY"]
 
 
 def missing_secret_names(config: AppConfig, environ: Optional[Mapping[str, str]] = None) -> List[str]:
