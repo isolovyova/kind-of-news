@@ -50,35 +50,56 @@ class OnboardingContractTests(unittest.TestCase):
         self.assertEqual(manifest["name"], "kind-of-news")
         self.assertEqual(manifest["skills"], "./skills/")
         self.assertIn("Start the Kind of News setup tutorial", manifest["interface"]["defaultPrompt"])
+        self.assertIn("optional delivery", manifest["description"])
+        self.assertIn("currently paused", manifest["interface"]["longDescription"])
         self.assertTrue((ROOT / "skills" / "kind-of-news" / "SKILL.md").is_file())
         self.assertTrue((ROOT / "skills" / "kind-of-news-setup" / "SKILL.md").is_file())
 
-    def test_public_onboarding_prompt_does_not_route_to_user_repository(self):
-        readme = (ROOT / "README.md").read_text(encoding="utf-8")
-        prompt = readme.split("```text", 2)[1]
-        self.assertIn("## Start in Codex or Claude Code", readme)
-        self.assertIn("### What happens next", readme)
-        self.assertIn("## Optional: self-managed GitHub Actions", readme)
-        self.assertIn("docs/github-actions-setup.md", readme)
-        self.assertLess(
-            readme.index("### What happens next"),
-            readme.index("## Optional: self-managed GitHub Actions"),
+    def test_claude_marketplace_exposes_both_skills_from_a_valid_plugin_root(self):
+        marketplace = json.loads(
+            (ROOT / ".claude-plugin" / "marketplace.json").read_text(encoding="utf-8")
         )
-        self.assertNotIn("## Where the schedule lives", readme)
-        self.assertNotIn("## Advanced Actions secrets", readme)
-        self.assertIn("immediately start its setup tutorial", prompt)
-        self.assertIn("Do not ask me to create a GitHub repository", prompt)
-        self.assertIn("use the approved Kind of News welcome from the setup skill exactly", prompt)
-        self.assertIn("Ready to start Kind of News?", prompt)
-        self.assertIn("I’ll send your first issue now", prompt)
-        self.assertIn("activate recurring delivery for subsequent personal issues", prompt)
-        self.assertIn("send issue #1 immediately", prompt)
-        self.assertIn("If I explicitly ask for a preview or dry run, send and schedule nothing", prompt)
-        self.assertIn("https://buttondown.com/kindofnews", prompt)
-        self.assertIn("do not create a personal channel, schedule, or Gmail delivery", prompt)
-        self.assertIn("Never describe this personal path as sending the branded Buttondown newsletter", prompt)
-        self.assertNotIn("send exactly one test issue", prompt)
-        self.assertNotIn("ask separately about automatic delivery", prompt)
+        plugin = marketplace["plugins"][0]
+        self.assertEqual(plugin["name"], "kind-of-news")
+        self.assertEqual(plugin["source"]["source"], "git-subdir")
+        self.assertEqual(plugin["source"]["path"], "skills")
+        self.assertEqual(plugin["version"], "1.1.1")
+
+        manifest = json.loads(
+            (ROOT / "skills" / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(manifest["name"], "kind-of-news")
+        self.assertEqual(manifest["version"], "1.1.1")
+        self.assertEqual(manifest["skills"], "./")
+        self.assertTrue((ROOT / "skills" / "kind-of-news" / "SKILL.md").is_file())
+        self.assertTrue((ROOT / "skills" / "kind-of-news-setup" / "SKILL.md").is_file())
+
+        setup_docs = (ROOT / "docs" / "codex-cowork-setup.md").read_text(encoding="utf-8")
+        self.assertIn(
+            "/plugin marketplace add https://github.com/isolovyova/kind-of-news.git",
+            setup_docs,
+        )
+        self.assertIn("/plugin install kind-of-news@kind-of-news --scope user", setup_docs)
+        self.assertIn("/kind-of-news:kind-of-news-setup", setup_docs)
+
+    def test_public_readme_separates_reader_creator_and_author_paths(self):
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        prompt = readme.split("```text", 2)[1].split("```", 1)[0].strip()
+        self.assertIn("## Subscribe to Kind of News newsletter", readme)
+        self.assertIn("https://buttondown.com/kindofnews", readme)
+        self.assertIn("## Start in Codex or Claude Code", readme)
+        self.assertIn("Want your own private digest in a connected channel", readme)
+        self.assertIn("You do not need to create or fork a GitHub repository", readme)
+        self.assertIn("## How it works", readme)
+        self.assertIn("docs/github-actions-setup.md", readme)
+        self.assertIn("after final verification", readme)
+        self.assertIn("recurring delivery is currently paused", readme.lower())
+        self.assertEqual(
+            prompt,
+            "Install Kind of News from https://github.com/isolovyova/kind-of-news and start the setup tutorial.",
+        )
+        self.assertNotIn("### What happens next", readme)
+        self.assertNotIn("## Optional: self-managed GitHub Actions", readme)
 
     def test_branded_newsletter_path_is_distinct_and_author_controlled(self):
         setup = (ROOT / "skills" / "kind-of-news-setup" / "SKILL.md").read_text(encoding="utf-8")
@@ -108,6 +129,10 @@ class OnboardingContractTests(unittest.TestCase):
         self.assertIn("Advanced repo-runner mode", workflow)
         self.assertIn("This preview intentionally sends nothing", advanced)
         self.assertIn("different from the normal guided setup", advanced)
+        self.assertIn("Automatic branded delivery is intentionally paused", advanced)
+        self.assertIn("workflow is currently manual-only", advanced)
+        self.assertIn("there is no active `schedule` trigger", advanced)
+        self.assertNotIn("checked-in scheduled workflow currently runs", advanced)
 
 
 if __name__ == "__main__":
