@@ -1,41 +1,69 @@
 # Kind of News
 
-A digest for people who are tired of digests. Its intended cadence is Mondays,
-Wednesdays, and Fridays; recurring delivery is currently paused while the
-owner completes final verification.
-Every issue has four short blocks: one good thing that actually happened, one
-piece of history with a human detail in it, one fact you didn't know this
-morning, and one sentence that asks nothing of you.
-Everything verified. Links at the bottom, because that part matters.
+A small, fact-checked newsletter about useful things, curious facts, and what
+is worth noticing.
 
-## Subscribe to Kind of News newsletter
+## Subscribe
 
-If you are here as a reader, [subscribe to Kind of News on
-Buttondown](https://buttondown.com/kindofnews). Buttondown manages the
-subscriber list and delivery. The intended cadence is Mondays, Wednesdays, and
-Fridays, but recurring delivery is currently paused while the owner completes
-final verification. One good thing, one curiosity, one tiny fact, one thought.
-No hustle, no politics, no takes.
+Receive an automatically generated Kind of News edition every Monday,
+Wednesday, and Friday.
 
-## Start in Codex or Claude Code
+[Subscribe on Buttondown](https://buttondown.com/kindofnews)
 
-Want your own private digest in a connected channel? Copy this into Codex or
-Claude Code. You do not need to create or fork a GitHub repository:
+After you confirm your subscription, Buttondown sends exactly one native
+Welcome email. This repository does not generate a second welcome email.
+
+A scheduled GitHub Actions workflow runs the public newsletter at 06:00 in
+`America/Vancouver` on Monday, Wednesday, and Friday. The reader pipeline:
+
+1. Collects fresh sources.
+2. Generates the newsletter with AI.
+3. Validates the four content blocks and their source links.
+4. Publishes the validated issue through the Buttondown API.
+5. Buttondown delivers it to subscribers.
+
+## Run privately
+
+Use Codex or Claude Code to generate one personalized issue on demand. No
+subscription, scheduled delivery, Buttondown, connected channel, or email is
+required. The issue appears in the conversation; ask to save a local Markdown
+copy if you want one.
+
+Copy this prompt:
 
 ```text
-Install Kind of News from https://github.com/isolovyova/kind-of-news and start the setup tutorial.
+Install Kind of News from https://github.com/isolovyova/kind-of-news and generate a personalized issue for me now. Research and validate it, display it here, and do not subscribe me, schedule delivery, use Buttondown, connect a channel, or send email.
 ```
 
-## How it works
+## Example issue
 
-- Want to read Kind of News? [Subscribe on Buttondown](https://buttondown.com/kindofnews).
-- Want your own private digest? Install the plugin in Codex or Claude Code and follow the short setup tutorial.
-- Want to run the public newsletter? The owner can use the [advanced GitHub Actions setup](docs/github-actions-setup.md) after final verification.
+This is a compact sourced example, not a Welcome email or a current issue.
 
-## More detail
+### ☀️ Good thing
 
-- [Assistant setup](docs/assistant-setup.md)
-- [Editorial rules](skills/kind-of-news/SKILL.md)
+The first free modern public library in Peterborough, New Hampshire, opened in
+1833. Its founding model treated library access as a public good, available to
+the whole community.
+
+### 📅 On this day
+
+Before Apollo 11 reached the Moon, NASA carried messages from people around the
+world on a tiny silicon disc. A very small object held a very large hello.
+
+### 🧠 Tiny fact
+
+Octopuses have three hearts, and two of them stop beating while the animal
+swims.
+
+### 🌱 Thought for the day
+
+Not everything useful has to be urgent.
+
+Sources:
+
+[1] [American Library Association](https://www.ala.org/aboutala/1833) — public-library history
+[2] [NASA](https://www.nasa.gov/history/55-years-ago-one-month-until-the-moon-landing/) — Apollo 11 messages
+[3] [NOAA Fisheries](https://www.fisheries.noaa.gov/feature-story/celebrate-holidays-our-ink-blot-and-stumpy-paper-snowflakes) — octopus biology
 
 ## License
 
