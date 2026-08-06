@@ -27,9 +27,9 @@ def _post_buttondown(url: str, api_key: str, payload: Dict[str, Any]) -> Dict[st
             "Authorization": "Token " + api_key,
             "Content-Type": "application/json",
             "Accept": "application/json",
-            # Buttondown requires this one-time acknowledgement before the
-            # first API-initiated live send for an API key. This adapter is
-            # called only by a non-dry live delivery path.
+            # Buttondown's current API requires an explicit, per-key
+            # confirmation before the first live send.  This adapter is only
+            # invoked by the explicit send path, never by dry-run.
             "X-Buttondown-Live-Dangerously": "true",
         },
         method="POST",
@@ -67,11 +67,16 @@ class ButtondownDelivery:
 
         payload = {
             "subject": "Kind of News #%s" % issue.issue_id,
-            "body": "<!-- buttondown-editor-mode: fancy -->\n" + render_html(issue),
+            "body": "<!-- buttondown-editor-mode: fancy -->\n"
+            + render_html(
+                issue,
+                include_issue_title=False,
+                footer="Sent with love and verified links.",
+            ),
             "slug": "kind-of-news-%s" % issue.issue_id,
-            # Buttondown now safely defaults API-created emails to drafts. A
-            # live Kind of News run is explicitly user-confirmed, so queue the
-            # validated issue for sending instead.
+            # Buttondown now safely defaults API-created emails to drafts.  A
+            # live Kind of News run is explicitly user-confirmed, so put the
+            # validated issue into Buttondown's send queue instead.
             "status": "about_to_send",
         }
         try:

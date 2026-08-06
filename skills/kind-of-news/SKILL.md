@@ -181,6 +181,10 @@ secret store. The normal publishing path calls Buttondown directly; it does
 not create a manual draft in the Buttondown web app and does not use a
 personal Gmail sender.
 
+Buttondown supplies the branded header and date. Its HTML body must omit the
+repeated `Kind of News #YYYY-MM-DD` heading and end with the concise line
+`Sent with love and verified links.` before Buttondown's own footer.
+
 When asked to configure Kind of News, install the skill and use the host's
 one-time setup flow. Never ask a user to paste API keys or OAuth tokens into
 chat or into a committed file. Delivery credentials belong in the host's
