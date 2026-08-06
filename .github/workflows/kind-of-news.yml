@@ -1,7 +1,10 @@
 name: Kind of News
 
-# Automatic delivery is paused until the owner explicitly re-enables this schedule.
 on:
+  schedule:
+    # GitHub may delay scheduled runs during high-load periods.
+    - cron: "0 6 * * 1,3,5"
+      timezone: "America/Vancouver"
   workflow_dispatch:
     inputs:
       mode:
@@ -64,34 +67,25 @@ jobs:
           path: .kind-of-news-state
           key: kind-of-news-state-${{ steps.issue.outputs.date }}
 
-      - name: Run setup checks
+      - name: Validate config and required secrets
         if: ${{ env.KIND_OF_NEWS_MODE == 'send' }}
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          GMAIL_CLIENT_ID: ${{ secrets.GMAIL_CLIENT_ID }}
-          GMAIL_CLIENT_SECRET: ${{ secrets.GMAIL_CLIENT_SECRET }}
-          GMAIL_REFRESH_TOKEN: ${{ secrets.GMAIL_REFRESH_TOKEN }}
-          GMAIL_TO: ${{ secrets.GMAIL_TO }}
-          GMAIL_FROM: ${{ vars.GMAIL_FROM }}
           BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
-        run: python scripts/setup.py --check --config config.yml
+        run: |
+          python - <<'PY'
+          from runner.config import load_config, missing_secret_names
+
+          missing = missing_secret_names(load_config("config.yml"))
+          if missing:
+              raise SystemExit("Missing required secrets: " + ", ".join(missing))
+          PY
 
       - name: Generate and deliver
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
-          GMAIL_CLIENT_ID: ${{ secrets.GMAIL_CLIENT_ID }}
-          GMAIL_CLIENT_SECRET: ${{ secrets.GMAIL_CLIENT_SECRET }}
-          GMAIL_REFRESH_TOKEN: ${{ secrets.GMAIL_REFRESH_TOKEN }}
-          GMAIL_TO: ${{ secrets.GMAIL_TO }}
-          GMAIL_FROM: ${{ vars.GMAIL_FROM }}
           BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
         run: |
           if [ "$KIND_OF_NEWS_MODE" = "dry-run" ]; then
             python -m runner --config config.yml --date "${{ steps.issue.outputs.date }}" --dry-run
