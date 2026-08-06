@@ -61,6 +61,9 @@ class DeliveryTests(unittest.TestCase):
         self.assertTrue(calls[0][2]["body"].startswith("<!-- buttondown-editor-mode: fancy -->"))
         for heading in ("☀️ Good thing", "📅 On this day", "🧠 Tiny fact", "🌱 Thought for the day"):
             self.assertIn(heading, calls[0][2]["body"])
+        self.assertNotIn("<h1>Kind of News #2026-08-03</h1>", calls[0][2]["body"])
+        self.assertNotIn("Kind of News — sent with love and verified links.", calls[0][2]["body"])
+        self.assertIn("<p>Sent with love and verified links.</p>", calls[0][2]["body"])
         self.assertIn(
             '<a href="https://example.com/kind-of-news/good-thing">Example source</a>',
             calls[0][2]["body"],
