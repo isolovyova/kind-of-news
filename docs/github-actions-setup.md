@@ -11,6 +11,12 @@ Automatic branded delivery is intentionally paused in the public workflow while
 the owner completes final verification. Until the owner re-enables a schedule,
 the workflow supports only an explicitly started dry run or live `send`.
 
+The one-time welcome for a newly confirmed Buttondown subscriber is a separate
+native Buttondown configuration step. It is not provided by this repository's
+workflow and does not replace the later author-controlled broadcast schedule.
+Follow the [Buttondown Welcome Issue handoff](buttondown-welcome-issue.md) and
+enable exactly one of the documented Buttondown welcome mechanisms.
+
 ## Setup
 
 1. Create a repository from this template or fork this project.
