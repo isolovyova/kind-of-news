@@ -10,19 +10,11 @@ Wednesday, and Friday.
 
 [Subscribe on Buttondown](https://buttondown.com/kindofnews)
 
-After you confirm your subscription, Buttondown sends exactly one native
-Welcome email. This repository does not generate a second welcome email.
+After you confirm your subscription, Buttondown sends you a welcome email.
+Than you receive a new issue every Monday, Wednesday, and Friday.
 
-A scheduled GitHub Actions workflow runs the public newsletter at 06:00 in
-`America/Vancouver` on Monday, Wednesday, and Friday. The reader pipeline:
 
-1. Collects fresh sources.
-2. Generates the newsletter with AI.
-3. Validates the four content blocks and their source links.
-4. Publishes the validated issue through the Buttondown API.
-5. Buttondown delivers it to subscribers.
-
-## Run privately
+## Run in your Codex or Claude Code
 
 Use Codex or Claude Code to generate one personalized issue on demand. No
 subscription, scheduled delivery, Buttondown, connected channel, or email is
@@ -32,7 +24,7 @@ copy if you want one.
 Copy this prompt:
 
 ```text
-Install Kind of News from https://github.com/isolovyova/kind-of-news and generate a personalized issue for me now. Research and validate it, display it here, and do not subscribe me, schedule delivery, use Buttondown, connect a channel, or send email.
+Install Kind of News from https://github.com/isolovyova/kind-of-news and display it for me now.
 ```
 
 ## Example issue
