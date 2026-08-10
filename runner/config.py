@@ -16,7 +16,7 @@ except ImportError:  # pragma: no cover - the runtime requirements install PyYAM
 DEFAULT_TIMEZONE = "America/Vancouver"
 DEFAULT_MODEL = "gpt-5.6-terra"
 DEFAULT_CHANNELS = ["buttondown"]
-ALLOWED_CHANNELS = {"buttondown"}
+ALLOWED_CHANNELS = {"buttondown", "site"}
 
 
 @dataclass(frozen=True)
@@ -65,11 +65,13 @@ def load_config(path: Optional[str] = None) -> AppConfig:
     if not isinstance(channels, list) or not all(isinstance(item, str) for item in channels):
         raise ConfigError("delivery.channels must be a list of channel names")
     normalized_channels = [item.strip().lower() for item in channels if item.strip()]
+    if not normalized_channels:
+        raise ConfigError("delivery.channels must name at least one channel")
     unknown_channels = set(normalized_channels) - ALLOWED_CHANNELS
     if unknown_channels:
         raise ConfigError("Unsupported channel(s): %s" % ", ".join(sorted(unknown_channels)))
-    if normalized_channels != ["buttondown"]:
-        raise ConfigError("delivery.channels must contain only buttondown")
+    if len(set(normalized_channels)) != len(normalized_channels):
+        raise ConfigError("delivery.channels must not repeat a channel")
 
     timezone = str(raw.get("timezone", DEFAULT_TIMEZONE)).strip()
     issue_time = str(schedule.get("time", "06:00")).strip()
@@ -94,7 +96,16 @@ def load_config(path: Optional[str] = None) -> AppConfig:
 
 
 def required_secret_names(config: AppConfig) -> List[str]:
-    return ["OPENAI_API_KEY", "BUTTONDOWN_API_KEY"]
+    """Name only the secrets the configured channels actually need.
+
+    The site channel writes files into the repository, so it needs no
+    credential of its own.
+    """
+
+    names = ["OPENAI_API_KEY"]
+    if "buttondown" in config.delivery.channels:
+        names.append("BUTTONDOWN_API_KEY")
+    return names
 
 
 def missing_secret_names(config: AppConfig, environ: Optional[Mapping[str, str]] = None) -> List[str]:

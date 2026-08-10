@@ -1,0 +1,685 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kind of News</title>
+<meta name="description" content="Nothing here is urgent. All of it is true. One small issue, no feed, then the door closes.">
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300;0,7..72,400;0,7..72,600;1,7..72,300;1,7..72,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #fcfcfb;
+    --ink: #14140f;
+    --ink-soft: #1a1a14;
+    --ink-body: #26261f;
+    --ink-quiet: #3a3a32;
+    --grey: #6e6e66;
+    --rule: #deded6;
+    --edge: #c9c9c1;
+    --serif: "Literata", Georgia, "Iowan Old Style", serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { height: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  [hidden] { display: none !important; }
+
+  .stage {
+    position: relative;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    background: var(--paper);
+  }
+
+  /* Header */
+  .topbar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 30px;
+    background: var(--paper);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--grey);
+  }
+  .topbar button {
+    appearance: none;
+    border: 0;
+    background: none;
+    padding: 0;
+    font: inherit;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--grey);
+    cursor: pointer;
+    border-bottom: 1px solid var(--edge);
+  }
+  .topbar button:hover { color: var(--ink); border-bottom-color: var(--ink); }
+  .topbar button:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+  /* Scroller */
+  .scroller {
+    height: 100%;
+    overflow-y: auto;
+    scroll-snap-type: y proximity;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+  }
+  .scroller::-webkit-scrollbar { display: none; }
+  .scroller:focus-visible { outline: 2px solid var(--ink); outline-offset: -4px; }
+
+  .screen {
+    min-height: 100vh;
+    min-height: 100dvh;
+    scroll-snap-align: start;
+    display: flex;
+    align-items: center;
+    padding: 110px 30px 96px;
+  }
+  .screen > .col {
+    width: 100%;
+    max-width: 620px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  /* Intro */
+  .intro > .col { gap: 34px; }
+  .intro h1 {
+    margin: 0;
+    font-weight: 400;
+    font-size: 46px;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+  }
+  .keyline { height: 1px; background: var(--ink); }
+  .lede {
+    margin: 0;
+    font-weight: 300;
+    font-size: 25px;
+    line-height: 1.62;
+    color: var(--ink-body);
+    text-wrap: pretty;
+  }
+
+  /* Block heading rail */
+  .rail {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .rail .label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .rail .count {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: var(--grey);
+    white-space: nowrap;
+  }
+  .rail.strong { border-bottom-color: var(--ink); }
+
+  .body-text {
+    margin: 0;
+    font-size: 21px;
+    line-height: 1.76;
+    color: var(--ink-soft);
+    text-wrap: pretty;
+  }
+  .place { color: var(--grey); }
+
+  .thought-text {
+    margin: 0;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 32px;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    text-wrap: pretty;
+  }
+
+  /* Sources + close */
+  .closing > .col { gap: 44px; }
+  .sources-group { display: flex; flex-direction: column; gap: 20px; }
+  .sources-list { display: flex; flex-direction: column; gap: 18px; }
+  .sources-list a {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    text-decoration: none;
+    color: inherit;
+    border-bottom: 1px solid transparent;
+  }
+  .sources-list a:hover { border-bottom-color: var(--ink); }
+  .sources-list a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+  .source-name {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--grey);
+  }
+  .source-desc { font-size: 16px; line-height: 1.65; color: var(--ink-body); }
+
+  .close-group { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+  .colophon { margin: 0; font-size: 13px; line-height: 1.6; color: var(--grey); }
+
+  /* Buttons */
+  .btn {
+    appearance: none;
+    border: 1px solid var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+    padding: 18px 30px;
+    font-family: var(--serif);
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    max-width: 100%;
+  }
+  .btn:hover { opacity: 0.85; }
+  .btn:active { transform: scale(0.98); }
+  .btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+  /* Closed overlay */
+  .overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    background: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 70px 30px;
+    overflow-y: auto;
+  }
+  /* margin:auto rather than justify-content keeps a tall panel from being
+     clipped at the top once it overflows the viewport. */
+  .overlay > .col {
+    width: 100%;
+    max-width: 560px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 34px;
+  }
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--grey);
+  }
+  .eyebrow.faint { color: var(--edge); }
+  .overlay .thought-text { font-size: 30px; }
+  .hairline { height: 1px; background: var(--rule); }
+  .ask { margin: 0; font-size: 21px; line-height: 1.6; color: var(--ink); text-wrap: pretty; }
+  .fineprint { margin: 0; font-size: 13px; line-height: 1.7; color: var(--grey); }
+  .aside { margin: 0; font-size: 14px; line-height: 1.6; color: var(--grey); }
+
+  form.subscribe { display: flex; flex-wrap: wrap; gap: 10px; }
+  form.subscribe input[type="email"] {
+    flex: 1 1 220px;
+    min-width: 0;
+    appearance: none;
+    border: 1px solid var(--edge);
+    background: #ffffff;
+    padding: 16px 18px;
+    font-family: var(--serif);
+    font-size: 15px;
+    color: var(--ink);
+    outline: none;
+  }
+  form.subscribe input[type="email"]:focus { border-color: var(--ink); }
+  form.subscribe button {
+    appearance: none;
+    border: 1px solid var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+    padding: 16px 26px;
+    font-family: var(--serif);
+    font-size: 15px;
+    cursor: pointer;
+  }
+  form.subscribe button:hover { opacity: 0.85; }
+  form.subscribe button:active { transform: scale(0.98); }
+  form.subscribe button:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+  /* About modal */
+  .backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 30;
+    background: rgba(20, 20, 15, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+    overflow-y: auto;
+  }
+  .sheet {
+    width: 100%;
+    max-width: 520px;
+    margin: auto;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .sheet .lede-sm { margin: 0; font-size: 22px; line-height: 1.5; color: var(--ink); }
+  .sheet .copy { margin: 0; font-size: 16px; line-height: 1.7; color: var(--ink-quiet); text-wrap: pretty; }
+  .sheet .links { display: flex; flex-wrap: wrap; gap: 10px; padding-top: 4px; }
+  .sheet .links a {
+    border: 1px solid var(--edge);
+    padding: 11px 18px;
+    font-family: var(--serif);
+    font-size: 14px;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .sheet .links a:hover { border-color: var(--ink); }
+  .sheet .links a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+  .sheet .close {
+    appearance: none;
+    border: 0;
+    background: none;
+    padding: 0;
+    font-family: var(--serif);
+    font-size: 13px;
+    color: var(--grey);
+    cursor: pointer;
+  }
+  .sheet .close:hover { color: var(--ink); }
+  .sheet .close:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+  @media (max-width: 520px) {
+    .topbar { padding: 16px 20px; gap: 10px; letter-spacing: 0.12em; }
+    .screen { padding: 96px 20px 72px; }
+    .intro h1 { font-size: 36px; }
+    .lede { font-size: 21px; }
+    .body-text { font-size: 19px; }
+    .thought-text { font-size: 26px; }
+    .overlay { padding: 56px 20px; }
+    .overlay .thought-text { font-size: 24px; }
+    .sheet { padding: 26px; }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .scroller { scroll-behavior: smooth; }
+    .btn, form.subscribe button, .sheet .links a, form.subscribe input[type="email"] {
+      transition: opacity 180ms cubic-bezier(0.4, 0, 0.2, 1),
+                  transform 180ms cubic-bezier(0.4, 0, 0.2, 1),
+                  border-color 180ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .ink-fade { animation: inkFade 700ms cubic-bezier(0.4, 0, 0.2, 1) both; }
+    .ink-fade-slow { animation: inkFade 700ms 120ms cubic-bezier(0.4, 0, 0.2, 1) both; }
+    .ink-soft { animation: inkSoft 520ms cubic-bezier(0.4, 0, 0.2, 1) both; }
+    .ink-soft-fast { animation: inkSoft 260ms cubic-bezier(0.4, 0, 0.2, 1) both; }
+    @keyframes inkFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    @keyframes inkSoft { from { opacity: 0; } to { opacity: 1; } }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scroller { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+
+  <header class="topbar">
+    <span>Kind of News</span>
+    <span id="topbar-date"></span>
+    <button type="button" id="about-open">About</button>
+  </header>
+
+  <div class="scroller" id="scroller" tabindex="0" role="region" aria-label="Today's issue">
+
+    <section class="screen intro">
+      <div class="col ink-fade">
+        <h1>Kind of News</h1>
+        <div class="keyline"></div>
+        <p class="lede">Nothing here is urgent. All of it is true.</p>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-good">
+      <div class="col">
+        <div class="rail"><span class="label">Good thing</span><span class="count">1 of 4</span></div>
+        <p class="body-text" id="good-thing"></p>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-current">
+      <div class="col">
+        <div class="rail"><span class="label" id="current-label"></span><span class="count">2 of 4</span></div>
+        <p class="body-text" id="current-body"></p>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-fact">
+      <div class="col">
+        <div class="rail"><span class="label">Tiny fact</span><span class="count">3 of 4</span></div>
+        <p class="body-text" id="tiny-fact"></p>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-thought">
+      <div class="col" style="gap: 26px;">
+        <div class="rail"><span class="label">Thought for the day</span><span class="count">4 of 4</span></div>
+        <p class="thought-text" id="thought"></p>
+      </div>
+    </section>
+
+    <section class="screen closing">
+      <div class="col">
+        <div class="sources-group">
+          <div class="rail strong"><span class="label">Sources</span><span class="count">Verified</span></div>
+          <div class="sources-list" id="sources"></div>
+        </div>
+        <div class="close-group">
+          <button type="button" class="btn" id="enough-btn">That&rsquo;s enough news for today</button>
+          <p class="colophon">Kind of News. Sent with love and verified links.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Closed for today -->
+  <div class="overlay" id="closed" hidden>
+    <div class="col">
+      <div id="closing-thought-group" style="display: flex; flex-direction: column; gap: 22px;">
+        <span class="eyebrow">That&rsquo;s it for today</span>
+        <p class="thought-text" id="closing-thought"></p>
+      </div>
+
+      <div class="hairline"></div>
+
+      <div id="subscribe-ask" style="display: flex; flex-direction: column; gap: 18px;">
+        <p class="ask">Want this quietly, three mornings a week?</p>
+        <form class="subscribe" id="subscribe-form"
+              action="https://buttondown.com/api/emails/embed-subscribe/kindofnews"
+              method="post" target="_blank">
+          <label for="bd-email" hidden>Email address</label>
+          <input type="email" name="email" id="bd-email" placeholder="you@email.com" required>
+          <input type="hidden" name="embed" value="1">
+          <button type="submit">Send it to me</button>
+        </form>
+        <p class="fineprint">Mon / Wed / Fri, 6:00 in the morning. One issue, four things, verified links. Unsubscribe whenever.</p>
+      </div>
+
+      <div id="subscribe-thanks" hidden style="display: flex; flex-direction: column; gap: 10px;">
+        <p class="ask">Thank you. Confirm it in your inbox and the next one will find you.</p>
+        <p class="aside">Nothing else will arrive in between.</p>
+      </div>
+
+      <span class="eyebrow faint">See you tomorrow</span>
+    </div>
+  </div>
+
+  <!-- About -->
+  <div class="backdrop" id="about" hidden>
+    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="about-title">
+      <div class="rail">
+        <span class="label" id="about-title">About</span>
+        <button type="button" class="close" id="about-close">Close</button>
+      </div>
+      <p class="lede-sm">Hi, I&rsquo;m Iryna Solovyova. I build products.</p>
+      <p class="copy">This one is for pure joy, for anyone tired of bad news. Four small things, three mornings a week, and then it stops. If it makes a morning lighter, tell me.</p>
+      <div class="links" id="about-links"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  // An empty href hides its button, so nothing dead ever ships. Give the
+  // second one a destination to bring it back.
+  var LINKS = [
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/irynasolovyova/" },
+    { label: "Reach me to say hi", href: "" }
+  ];
+
+  var STORAGE_KEY = "kindofnews.enough";
+  var BLOCK_ORDER = ["good_thing", "current_or_history", "tiny_fact"];
+
+  var scroller = document.getElementById("scroller");
+  var topbar = document.querySelector(".topbar");
+  var closedEl = document.getElementById("closed");
+  var aboutEl = document.getElementById("about");
+  var aboutOpenBtn = document.getElementById("about-open");
+  var lastFocus = null;
+
+  function $(id) { return document.getElementById(id); }
+  function setText(id, value) { $(id).textContent = value; }
+
+  // Local calendar day, not UTC. The button promises "today" in the reader's
+  // own timezone, and toISOString would roll over early west of Greenwich.
+  function todayKey() {
+    var now = new Date();
+    return [
+      now.getFullYear(),
+      String(now.getMonth() + 1).padStart(2, "0"),
+      String(now.getDate()).padStart(2, "0")
+    ].join("-");
+  }
+
+  // The dismissal carries the day's thought with it, so a reader who comes back
+  // still sees the line they stopped on without refetching the issue.
+  function readDismissal() {
+    try {
+      var raw = window.localStorage.getItem(STORAGE_KEY);
+      if (!raw) { return null; }
+      var parsed = JSON.parse(raw);
+      return parsed && typeof parsed.date === "string" ? parsed : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function writeDismissal(date, thought) {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify({ date: date, thought: thought || "" }));
+    } catch (e) { /* private mode */ }
+  }
+
+  function animate(el, className) {
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) { return; }
+    el.classList.add(className);
+  }
+
+  // "2026 · 08 · 05" from the issue id, without Date parsing: the id is
+  // already the calendar date the issue was published on.
+  function mastheadDate(issueId) {
+    var parts = /^(\d{4})-(\d{2})-(\d{2})$/.exec(issueId || "");
+    return parts ? parts[1] + " · " + parts[2] + " · " + parts[3] : "";
+  }
+
+  function httpsHref(url) {
+    try {
+      var parsed = new URL(url);
+      return parsed.protocol === "https:" ? parsed.href : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  // The skill puts "(Location):" at the head of the good thing. Tint it so the
+  // dateline reads as a dateline rather than as part of the sentence.
+  function renderGoodThing(text) {
+    var el = $("good-thing");
+    var match = /^(\([^)]*\):)\s*([\s\S]*)$/.exec(text || "");
+    if (!match) { el.textContent = text || ""; return; }
+    var place = document.createElement("span");
+    place.className = "place";
+    place.textContent = match[1];
+    el.appendChild(place);
+    el.appendChild(document.createTextNode(" " + match[2]));
+  }
+
+  function renderSources(sources) {
+    var list = $("sources");
+    BLOCK_ORDER.forEach(function (block) {
+      sources.filter(function (s) { return s && s.block === block; }).forEach(function (source) {
+        var href = httpsHref(source.url);
+        var row = document.createElement(href ? "a" : "div");
+        if (href) {
+          row.href = href;
+          row.target = "_blank";
+          row.rel = "noopener noreferrer";
+        }
+        var name = document.createElement("span");
+        name.className = "source-name";
+        name.textContent = (source.name || "") + (href ? " ↗" : "");
+        var desc = document.createElement("span");
+        desc.className = "source-desc";
+        desc.textContent = source.descriptor || "";
+        row.appendChild(name);
+        row.appendChild(desc);
+        list.appendChild(row);
+      });
+    });
+  }
+
+  function showClosed(thought) {
+    // Without an issue there is no thought to echo, so drop the group rather
+    // than leave an empty heading above blank space.
+    if (thought) {
+      setText("closing-thought", thought);
+    } else {
+      $("closing-thought-group").hidden = true;
+    }
+    scroller.hidden = true;
+    topbar.hidden = true;
+    closedEl.hidden = false;
+    animate(closedEl, "ink-soft");
+    animate(closedEl.firstElementChild, "ink-fade-slow");
+  }
+
+  function openAbout() {
+    // Fall back to the trigger: activeElement is <body> when the dialog is
+    // opened by anything other than a real click, and focusing <body> would
+    // strand focus on the now-hidden close button.
+    lastFocus = document.activeElement === document.body ? aboutOpenBtn : document.activeElement;
+    aboutEl.hidden = false;
+    animate(aboutEl, "ink-soft-fast");
+    animate(aboutEl.firstElementChild, "ink-fade");
+    $("about-close").focus();
+  }
+
+  function closeAbout() {
+    aboutEl.hidden = true;
+    aboutEl.classList.remove("ink-soft-fast");
+    aboutEl.firstElementChild.classList.remove("ink-fade");
+    if (lastFocus && lastFocus.focus) { lastFocus.focus(); }
+  }
+
+  function renderAboutLinks() {
+    var box = $("about-links");
+    LINKS.forEach(function (link) {
+      if (!link.href) { return; }
+      var a = document.createElement("a");
+      a.href = link.href;
+      a.textContent = link.label;
+      if (link.href.slice(0, 4) === "http") {
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+      }
+      box.appendChild(a);
+    });
+  }
+
+  function renderIssue(issue) {
+    setText("topbar-date", mastheadDate(issue.issue_id));
+    renderGoodThing(issue.good_thing);
+    setText("current-label", issue.current_header === "happening_now" ? "Happening now" : "On this day");
+    setText("current-body", issue.current_or_history || "");
+    setText("tiny-fact", issue.tiny_fact || "");
+    setText("thought", issue.thought || "");
+    renderSources(Array.isArray(issue.sources) ? issue.sources : []);
+  }
+
+  // Wiring that is the same whether or not an issue loaded.
+  renderAboutLinks();
+  aboutOpenBtn.addEventListener("click", openAbout);
+  $("about-close").addEventListener("click", closeAbout);
+  aboutEl.addEventListener("click", function (event) {
+    if (event.target === aboutEl) { closeAbout(); }
+  });
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && !aboutEl.hidden) { closeAbout(); }
+  });
+
+  $("enough-btn").addEventListener("click", function () {
+    var thought = $("thought").textContent;
+    writeDismissal(todayKey(), thought);
+    showClosed(thought);
+  });
+
+  // The form posts to Buttondown in a new tab, which is where the real
+  // confirmation happens. Swapping the panel here only acknowledges the send.
+  $("subscribe-form").addEventListener("submit", function () {
+    $("subscribe-ask").hidden = true;
+    $("subscribe-thanks").hidden = false;
+    animate($("subscribe-thanks"), "ink-soft");
+  });
+
+  var dismissal = readDismissal();
+  if (dismissal && dismissal.date === todayKey()) {
+    // Already stopped today. Do not even fetch the issue.
+    showClosed(dismissal.thought);
+    return;
+  }
+
+  fetch("issues/latest.json", { cache: "no-cache" })
+    .then(function (response) {
+      if (!response.ok) { throw new Error("issue unavailable"); }
+      return response.json();
+    })
+    .then(renderIssue)
+    .catch(function () {
+      // Never leave a blank page. The closed panel carries the subscribe form,
+      // which is the useful thing to offer when there is no issue.
+      showClosed("");
+    });
+})();
+</script>
+</body>
+</html>

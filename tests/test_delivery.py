@@ -1,10 +1,12 @@
 import json
+import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
 
 from runner.delivery.base import DeliveryError
 from runner.delivery.buttondown import ButtondownDelivery, EMAILS_URL, _post_buttondown
+from runner.delivery.site import SiteDelivery
 from runner.models import NewsIssue
 
 
@@ -80,6 +82,50 @@ class DeliveryTests(unittest.TestCase):
     def test_buttondown_requires_secret_without_exposing_it_in_config(self):
         with self.assertRaises(DeliveryError):
             ButtondownDelivery("")
+
+    def test_site_writes_the_dated_issue_and_latest_pointer(self):
+        with tempfile.TemporaryDirectory() as directory:
+            result = SiteDelivery(directory).send(self.issue)
+
+            issues_dir = Path(directory) / "issues"
+            dated = issues_dir / "2026-08-03.json"
+            latest = issues_dir / "latest.json"
+
+            self.assertEqual(result.channel, "site")
+            self.assertTrue(result.delivered)
+            self.assertTrue(dated.exists())
+            self.assertTrue(latest.exists())
+            self.assertEqual(
+                json.loads(dated.read_text(encoding="utf-8")),
+                self.issue.to_dict(),
+            )
+            self.assertEqual(
+                latest.read_text(encoding="utf-8"),
+                dated.read_text(encoding="utf-8"),
+            )
+
+    def test_site_republishing_the_same_issue_is_idempotent(self):
+        with tempfile.TemporaryDirectory() as directory:
+            delivery = SiteDelivery(directory)
+            delivery.send(self.issue)
+            delivery.send(self.issue)
+
+            issues_dir = Path(directory) / "issues"
+            self.assertEqual(
+                sorted(path.name for path in issues_dir.iterdir()),
+                ["2026-08-03.json", "latest.json"],
+            )
+
+    def test_site_does_not_publish_an_invalid_issue(self):
+        raw = self.issue.to_dict()
+        raw["sources"] = raw["sources"][:2]
+        invalid_issue = NewsIssue.from_mapping(raw)
+
+        with tempfile.TemporaryDirectory() as directory:
+            with self.assertRaises(DeliveryError):
+                SiteDelivery(directory).send(invalid_issue)
+
+            self.assertFalse((Path(directory) / "issues").exists())
 
     def test_buttondown_http_request_uses_token_header_and_json_body(self):
         response = type("Response", (), {"read": lambda self: b'{"id":"em_test","status":"sent"}'})()

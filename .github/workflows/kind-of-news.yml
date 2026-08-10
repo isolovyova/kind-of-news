@@ -21,7 +21,9 @@ on:
         type: string
 
 permissions:
-  contents: read
+  # Write access is needed so the site channel can commit the published issue
+  # into docs/issues/ for GitHub Pages.
+  contents: write
   actions: write
 
 concurrency:
@@ -92,6 +94,22 @@ jobs:
           else
             python -m runner --config config.yml --date "${{ steps.issue.outputs.date }}"
           fi
+
+      - name: Publish issue to the site
+        if: ${{ env.KIND_OF_NEWS_MODE == 'send' }}
+        env:
+          ISSUE_DATE: ${{ steps.issue.outputs.date }}
+        run: |
+          if [ -z "$(git status --porcelain docs/issues)" ]; then
+            echo "No site changes to publish."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/issues
+          git commit -m "Publish Kind of News #${ISSUE_DATE}"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
 
       - name: Save issue state
         if: ${{ always() && env.KIND_OF_NEWS_MODE == 'send' }}

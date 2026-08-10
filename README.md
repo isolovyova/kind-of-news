@@ -3,6 +3,18 @@
 A small, fact-checked newsletter about useful things, curious facts, and what
 is worth noticing.
 
+## Read it on the web
+
+One issue, no feed, and a button that closes the page until tomorrow. The site
+is plain static files under `docs/`, published with GitHub Pages, and it never
+shows more than the current issue.
+
+To preview it locally:
+
+```
+python -m http.server -d docs 8000
+```
+
 ## Subscribe
 
 Receive an automatically generated Kind of News edition every Monday,

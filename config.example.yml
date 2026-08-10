@@ -12,7 +12,11 @@ schedule:
 
 delivery:
   channels:
+    # Emails the issue to Buttondown subscribers.
     - buttondown
+    # Writes the issue into docs/issues/ for the public GitHub Pages site.
+    - site
 
 # BUTTONDOWN_API_KEY is supplied by secure host or GitHub Actions secret
-# storage. Never write it to this file or paste it into chat.
+# storage. Never write it to this file or paste it into chat. The site
+# channel needs no credential of its own.

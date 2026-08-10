@@ -23,12 +23,26 @@ class ConfigAndStateTests(unittest.TestCase):
     def test_default_model_is_available(self):
         self.assertTrue(DEFAULT_MODEL)
 
-    def test_only_buttondown_delivery_is_accepted(self):
+    def test_retired_delivery_channels_are_rejected(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "config.yml"
             path.write_text("delivery:\n  channels: [gmail]\n", encoding="utf-8")
             with self.assertRaises(ConfigError):
                 load_config(str(path))
+
+    def test_buttondown_and_site_can_be_configured_together(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "config.yml"
+            path.write_text("delivery:\n  channels: [buttondown, site]\n", encoding="utf-8")
+            self.assertEqual(load_config(str(path)).delivery.channels, ["buttondown", "site"])
+
+    def test_empty_and_repeated_channel_lists_are_rejected(self):
+        for body in ("delivery:\n  channels: []\n", "delivery:\n  channels: [site, site]\n"):
+            with tempfile.TemporaryDirectory() as directory:
+                path = Path(directory) / "config.yml"
+                path.write_text(body, encoding="utf-8")
+                with self.assertRaises(ConfigError):
+                    load_config(str(path))
 
     def test_obsolete_webhook_configuration_is_rejected(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -54,10 +68,20 @@ class ConfigAndStateTests(unittest.TestCase):
             [],
         )
 
+    def test_the_site_channel_needs_no_credential_of_its_own(self):
+        config = AppConfig(delivery=DeliveryConfig(channels=["site"]))
+        self.assertEqual(missing_secret_names(config, {}), ["OPENAI_API_KEY"])
+        self.assertEqual(missing_secret_names(config, {"OPENAI_API_KEY": "openai"}), [])
+
     def test_buttondown_delivery_reads_api_key_from_secure_environment(self):
         config = AppConfig(delivery=DeliveryConfig(channels=["buttondown"]))
         delivery = _make_delivery("buttondown", config, {"BUTTONDOWN_API_KEY": "buttondown-secret"})
         self.assertEqual(delivery._api_key, "buttondown-secret")
+
+    def test_site_delivery_targets_the_requested_docs_directory(self):
+        config = AppConfig(delivery=DeliveryConfig(channels=["site"]))
+        delivery = _make_delivery("site", config, {}, "build/docs")
+        self.assertEqual(delivery.issues_dir, Path("build/docs") / "issues")
 
     def test_state_persists_issue_and_buttondown_marker(self):
         raw = json.loads(
@@ -81,7 +105,8 @@ class ConfigAndStateTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             state = StateStore(directory, issue.issue_id)
             state.save_issue(issue)
-            state.mark_sent("buttondown")
+            for channel in load_config("config.yml").delivery.channels:
+                state.mark_sent(channel)
             self.assertEqual(
                 run(
                     config_path="config.yml",

@@ -10,3 +10,4 @@ schedule:
 delivery:
   channels:
   - buttondown
+  - site

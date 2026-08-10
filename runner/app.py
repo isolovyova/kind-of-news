@@ -11,7 +11,7 @@ from typing import Any, Mapping, Optional, Sequence
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from .config import AppConfig, ConfigError, load_config
-from .delivery import ButtondownDelivery, DeliveryError
+from .delivery import ButtondownDelivery, DeliveryError, SiteDelivery
 from .models import NewsIssue
 from .openai_client import OpenAIRuntimeError, ResponsesClient
 from .prompts import load_skill_text
@@ -36,9 +36,16 @@ def issue_date_for(config: AppConfig, requested: Optional[str] = None) -> str:
         raise RunnerError("Unknown timezone: %s" % config.timezone) from exc
 
 
-def _make_delivery(channel: str, config: AppConfig, environ: Mapping[str, str]) -> Any:
+def _make_delivery(
+    channel: str,
+    config: AppConfig,
+    environ: Mapping[str, str],
+    docs_dir: str = "docs",
+) -> Any:
     if channel == "buttondown":
         return ButtondownDelivery(environ.get("BUTTONDOWN_API_KEY", ""))
+    if channel == "site":
+        return SiteDelivery(docs_dir)
     raise RunnerError("Unsupported delivery channel: %s" % channel)
 
 
@@ -54,6 +61,7 @@ def run(
     requested_date: Optional[str] = None,
     skill_path: str = "skills/kind-of-news/SKILL.md",
     state_dir: str = ".kind-of-news-state",
+    docs_dir: str = "docs",
     dry_run: bool = False,
     fixture_path: Optional[str] = None,
     environ: Optional[Mapping[str, str]] = None,
@@ -98,7 +106,7 @@ def run(
             print("Skipping already delivered channel: %s" % channel)
             continue
         try:
-            delivery = _make_delivery(channel, config, environment)
+            delivery = _make_delivery(channel, config, environment, docs_dir)
             delivery.send(issue)
             state.mark_sent(channel)
             print("Delivered issue %s to %s" % (issue_id, channel))
@@ -120,6 +128,11 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--skill", default="skills/kind-of-news/SKILL.md")
     parser.add_argument("--state-dir", default=".kind-of-news-state")
     parser.add_argument(
+        "--docs-dir",
+        default="docs",
+        help="Published site directory the site channel writes issues into",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Advanced repo-runner preview; render without delivery or state writes",
@@ -136,6 +149,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             requested_date=args.date,
             skill_path=args.skill,
             state_dir=args.state_dir,
+            docs_dir=args.docs_dir,
             dry_run=args.dry_run,
             fixture_path=args.fixture,
         )
