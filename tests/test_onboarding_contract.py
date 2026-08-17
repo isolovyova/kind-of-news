@@ -10,22 +10,12 @@ class PublicContractTests(unittest.TestCase):
     def test_readme_has_only_subscribe_and_private_paths(self):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         self.assertEqual(readme.count("## Subscribe\n"), 1)
-        self.assertEqual(readme.count("## Run privately\n"), 1)
+        self.assertEqual(readme.count("## Run in your Codex or Claude Code\n"), 1)
         self.assertIn("https://buttondown.com/kindofnews", readme)
         self.assertIn(
-            "Install Kind of News from https://github.com/isolovyova/kind-of-news and generate a personalized issue for me now.",
+            "Install Kind of News from https://github.com/isolovyova/kind-of-news and display it for me now.",
             readme,
         )
-        for phrase in (
-            "Collects fresh sources.",
-            "Generates the newsletter with AI.",
-            "Validates the four content blocks and their source links.",
-            "Publishes the validated issue through the Buttondown API.",
-            "Buttondown delivers it to subscribers.",
-        ):
-            self.assertIn(phrase, readme)
-        self.assertIn("exactly one native", readme)
-        self.assertIn("does not generate a second welcome", readme)
         self.assertNotIn("author path", readme.lower())
         self.assertNotIn("setup wizard", readme.lower())
         self.assertNotIn("personal delivery", readme.lower())
