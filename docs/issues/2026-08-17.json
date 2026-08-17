@@ -1,0 +1,28 @@
+{
+  "issue_id": "2026-08-17",
+  "good_thing": "(Pagosa Springs, Colorado): The town library is finishing its new building, and the gardens around it are being put in by volunteers. One of them, known locally as the King of Compost, is building a three section compost bin and bringing in rotting aspen logs for the children's growing troughs. Another has spent the hot weeks hauling rock and mulch to carry the beds further around the building than anyone had planned for.",
+  "current_header": "on_this_day",
+  "current_or_history": "In 1907, Seattle opened a public market at Pike Place so farmers could sell straight to the people buying, instead of through middlemen who paid growers little and charged shoppers plenty. It worked. Two years later the market was drawing 64 farmers a day and about 300,000 visits a month.",
+  "tiny_fact": "A wombat produces around 100 cube shaped droppings a day. The corners come from roughly 40,000 contractions on the way down, and the shape is the whole point, because a cube will not roll off the rock it was left on.",
+  "thought": "The useful thing is often the one that stays put.",
+  "sources": [
+    {
+      "block": "good_thing",
+      "name": "Pagosa Daily Post",
+      "descriptor": "local library column from 13 August 2026 on the volunteers building the new gardens",
+      "url": "https://pagosadailypost.com/2026/08/13/library-news-community-is-real-in-pagosa-springs/"
+    },
+    {
+      "block": "current_or_history",
+      "name": "Seattle Municipal Archives",
+      "descriptor": "centennial exhibit on the 17 August 1907 opening and the market's early growth",
+      "url": "https://www.seattle.gov/city-archives/exhibits-and-education/online-exhibits/pike-place-market-centennial"
+    },
+    {
+      "block": "tiny_fact",
+      "name": "Smithsonian Magazine",
+      "descriptor": "report on the study explaining how wombat intestines form cubes and why",
+      "url": "https://www.smithsonianmag.com/smart-news/scientists-have-solved-mystery-how-wombats-poop-cubes-180976898/"
+    }
+  ]
+}
