@@ -1,6 +1,11 @@
 name: Kind of News
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/kind-of-news.yml
   schedule:
     # The site gets a fresh issue every day. Email remains limited to M/W/F.
     # GitHub may delay scheduled runs during high-load periods.
@@ -68,14 +73,19 @@ jobs:
         env:
           REQUESTED_MODE: ${{ inputs.mode }}
           ISSUE_DATE: ${{ steps.issue.outputs.date }}
+          EVENT_NAME: ${{ github.event_name }}
         run: |
           python - <<'PY'
           import os
           from datetime import date
 
           requested = os.environ.get("REQUESTED_MODE", "").strip()
+          event_name = os.environ.get("EVENT_NAME", "").strip()
           if requested:
               mode = requested
+          elif event_name == "push":
+              # Workflow changes may refresh the site, but must never email.
+              mode = "site-only"
           else:
               # The public site is daily; Buttondown stays on Monday,
               # Wednesday, and Friday.
