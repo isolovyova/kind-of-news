@@ -668,7 +668,9 @@
     return;
   }
 
-  fetch("issues/latest.json", { cache: "no-cache" })
+  // Ask for the visitor's local calendar date so a previous weekday's issue
+  // is never presented as today's edition.
+  fetch("issues/" + todayKey() + ".json", { cache: "no-cache" })
     .then(function (response) {
       if (!response.ok) { throw new Error("issue unavailable"); }
       return response.json();

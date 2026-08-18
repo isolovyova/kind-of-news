@@ -40,8 +40,9 @@ class SiteDelivery:
         payload = json.dumps(issue.to_dict(), ensure_ascii=False, indent=2) + "\n"
         try:
             self._issues_dir.mkdir(parents=True, exist_ok=True)
-            # The dated file is the archive; latest.json is what the page reads,
-            # so the site needs exactly one fetch and no index to scroll.
+            # The dated file is the archive. latest.json remains a compatibility
+            # pointer for older readers, while the public page requests today's
+            # dated file explicitly.
             (self._issues_dir / ("%s.json" % issue.issue_id)).write_text(payload, encoding="utf-8")
             (self._issues_dir / LATEST_FILENAME).write_text(payload, encoding="utf-8")
         except OSError as exc:

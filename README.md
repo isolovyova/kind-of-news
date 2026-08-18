@@ -6,8 +6,8 @@ is worth noticing.
 ## Read it on the web
 
 One issue, no feed, and a button that closes the page until tomorrow. The site
-is plain static files under `docs/`, published with GitHub Pages, and it never
-shows more than the current issue.
+is plain static files under `docs/`, published with GitHub Pages, and publishes
+the issue for the visitor's current calendar day.
 
 To preview it locally:
 
@@ -17,8 +17,8 @@ python -m http.server -d docs 8000
 
 ## Subscribe
 
-Receive an automatically generated Kind of News edition every Monday,
-Wednesday, and Friday.
+The website prepares an edition every day. Buttondown subscribers receive an
+automatically generated email every Monday, Wednesday, and Friday.
 
 [Subscribe on Buttondown](https://buttondown.com/kindofnews)
 

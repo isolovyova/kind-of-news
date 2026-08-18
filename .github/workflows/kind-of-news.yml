@@ -2,17 +2,19 @@ name: Kind of News
 
 on:
   schedule:
+    # The site gets a fresh issue every day. Email remains limited to M/W/F.
     # GitHub may delay scheduled runs during high-load periods.
-    - cron: "0 6 * * 1,3,5"
+    - cron: "0 6 * * *"
       timezone: "America/Vancouver"
   workflow_dispatch:
     inputs:
       mode:
-        description: "Advanced repo-runner mode: use dry-run first; choose send only after setup is verified."
+        description: "Choose dry-run, site-only, or send (site plus Buttondown)."
         required: true
         type: choice
         options:
           - dry-run
+          - site-only
           - send
         default: dry-run
       issue_date:
@@ -33,8 +35,6 @@ concurrency:
 jobs:
   generate-and-deliver:
     runs-on: ubuntu-latest
-    env:
-      KIND_OF_NEWS_MODE: ${{ inputs.mode || 'send' }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -63,6 +63,27 @@ jobs:
               handle.write("date=%s\n" % issue_date)
           PY
 
+      - name: Resolve run mode
+        id: mode
+        env:
+          REQUESTED_MODE: ${{ inputs.mode }}
+          ISSUE_DATE: ${{ steps.issue.outputs.date }}
+        run: |
+          python - <<'PY'
+          import os
+          from datetime import date
+
+          requested = os.environ.get("REQUESTED_MODE", "").strip()
+          if requested:
+              mode = requested
+          else:
+              # The public site is daily; Buttondown stays on Monday,
+              # Wednesday, and Friday.
+              mode = "send" if date.fromisoformat(os.environ["ISSUE_DATE"]).weekday() in {0, 2, 4} else "site-only"
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as handle:
+              handle.write("mode=%s\n" % mode)
+          PY
+
       - name: Restore issue state
         uses: actions/cache/restore@v4
         with:
@@ -70,15 +91,18 @@ jobs:
           key: kind-of-news-state-${{ steps.issue.outputs.date }}
 
       - name: Validate config and required secrets
-        if: ${{ env.KIND_OF_NEWS_MODE == 'send' }}
+        if: ${{ steps.mode.outputs.mode == 'send' || steps.mode.outputs.mode == 'site-only' }}
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
+          RUN_MODE: ${{ steps.mode.outputs.mode }}
         run: |
           python - <<'PY'
           from runner.config import load_config, missing_secret_names
 
           missing = missing_secret_names(load_config("config.yml"))
+          if __import__("os").environ["RUN_MODE"] == "site-only":
+              missing = [name for name in missing if name != "BUTTONDOWN_API_KEY"]
           if missing:
               raise SystemExit("Missing required secrets: " + ", ".join(missing))
           PY
@@ -88,15 +112,18 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
           BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
+          RUN_MODE: ${{ steps.mode.outputs.mode }}
         run: |
-          if [ "$KIND_OF_NEWS_MODE" = "dry-run" ]; then
+          if [ "$RUN_MODE" = "dry-run" ]; then
             python -m runner --config config.yml --date "${{ steps.issue.outputs.date }}" --dry-run
+          elif [ "$RUN_MODE" = "site-only" ]; then
+            python -m runner --config config.yml --date "${{ steps.issue.outputs.date }}" --site-only
           else
             python -m runner --config config.yml --date "${{ steps.issue.outputs.date }}"
           fi
 
       - name: Publish issue to the site
-        if: ${{ env.KIND_OF_NEWS_MODE == 'send' }}
+        if: ${{ steps.mode.outputs.mode == 'send' || steps.mode.outputs.mode == 'site-only' }}
         env:
           ISSUE_DATE: ${{ steps.issue.outputs.date }}
         run: |
@@ -112,7 +139,7 @@ jobs:
           git push origin "HEAD:${GITHUB_REF_NAME}"
 
       - name: Save issue state
-        if: ${{ always() && env.KIND_OF_NEWS_MODE == 'send' }}
+        if: ${{ always() && (steps.mode.outputs.mode == 'send' || steps.mode.outputs.mode == 'site-only') }}
         uses: actions/cache/save@v4
         continue-on-error: true
         with:

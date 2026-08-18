@@ -83,12 +83,14 @@ class PublicContractTests(unittest.TestCase):
         self.assertNotIn("Gmail", docs)
         self.assertNotIn("Telegram", docs)
 
-    def test_workflow_has_mwf_schedule_and_buttondown_secrets_only(self):
+    def test_workflow_has_daily_site_schedule_and_mwf_email_routing(self):
         workflow = (ROOT / ".github" / "workflows" / "kind-of-news.yml").read_text(
             encoding="utf-8"
         )
         self.assertIn("schedule:", workflow)
-        self.assertIn('cron: "0 6 * * 1,3,5"', workflow)
+        self.assertIn('cron: "0 6 * * *"', workflow)
+        self.assertIn('mode = "send" if date.fromisoformat(os.environ["ISSUE_DATE"]).weekday() in {0, 2, 4} else "site-only"', workflow)
+        self.assertIn("--site-only", workflow)
         self.assertIn('timezone: "America/Vancouver"', workflow)
         self.assertIn("BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}", workflow)
         self.assertIn("OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}", workflow)

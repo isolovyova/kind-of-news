@@ -2,6 +2,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from runner.app import _make_delivery, run
 from runner.config import ConfigError, DEFAULT_MODEL, DeliveryConfig, AppConfig, load_config, missing_secret_names
@@ -115,6 +116,38 @@ class ConfigAndStateTests(unittest.TestCase):
                     environ={"BUTTONDOWN_API_KEY": "not-used"},
                 ),
                 0,
+            )
+
+    def test_site_only_publishes_without_constructing_buttondown(self):
+        raw = json.loads(
+            (Path(__file__).parent / "fixtures" / "valid_issue.json").read_text(encoding="utf-8")
+        )
+        issue_id = "2026-08-18"
+        raw["issue_id"] = issue_id
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = Path(directory) / "issue.json"
+            fixture.write_text(json.dumps(raw), encoding="utf-8")
+            docs_dir = Path(directory) / "docs"
+            with patch("runner.app.ButtondownDelivery") as buttondown:
+                self.assertEqual(
+                    run(
+                        config_path="config.yml",
+                        requested_date=issue_id,
+                        state_dir=str(Path(directory) / "state"),
+                        docs_dir=str(docs_dir),
+                        site_only=True,
+                        fixture_path=str(fixture),
+                        environ={},
+                    ),
+                    0,
+                )
+                buttondown.assert_not_called()
+
+            self.assertTrue((docs_dir / "issues" / (issue_id + ".json")).is_file())
+            self.assertTrue((docs_dir / "issues" / "latest.json").is_file())
+            self.assertEqual(
+                StateStore(str(Path(directory) / "state"), issue_id).sent_channels(),
+                {"site"},
             )
 
 

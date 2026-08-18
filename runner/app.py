@@ -63,6 +63,7 @@ def run(
     state_dir: str = ".kind-of-news-state",
     docs_dir: str = "docs",
     dry_run: bool = False,
+    site_only: bool = False,
     fixture_path: Optional[str] = None,
     environ: Optional[Mapping[str, str]] = None,
 ) -> int:
@@ -72,9 +73,10 @@ def run(
     weekday = date.fromisoformat(issue_id).strftime("%A")
     state = StateStore(state_dir, issue_id)
     sent = state.sent_channels()
+    channels = ["site"] if site_only else list(config.delivery.channels)
 
-    if not dry_run and set(config.delivery.channels).issubset(sent):
-        print("Issue %s is already delivered to all configured channels." % issue_id)
+    if not dry_run and set(channels).issubset(sent):
+        print("Issue %s is already delivered to the selected channels." % issue_id)
         return 0
 
     issue = state.load_issue()
@@ -101,7 +103,7 @@ def run(
         return 0
 
     failures = []
-    for channel in config.delivery.channels:
+    for channel in channels:
         if channel in sent:
             print("Skipping already delivered channel: %s" % channel)
             continue
@@ -137,6 +139,11 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Advanced repo-runner preview; render without delivery or state writes",
     )
+    parser.add_argument(
+        "--site-only",
+        action="store_true",
+        help="Publish the issue to the site without sending Buttondown email",
+    )
     parser.add_argument("--fixture", default=None, help="Render a validated issue JSON fixture without the API")
     return parser
 
@@ -151,6 +158,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             state_dir=args.state_dir,
             docs_dir=args.docs_dir,
             dry_run=args.dry_run,
+            site_only=args.site_only,
             fixture_path=args.fixture,
         )
     except (ConfigError, RunnerError, IssueValidationError, OSError, ValueError) as exc:
