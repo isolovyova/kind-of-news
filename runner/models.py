@@ -10,6 +10,24 @@ BLOCK_ORDER = ("good_thing", "current_or_history", "tiny_fact")
 CURRENT_HEADERS = {"on_this_day", "happening_now"}
 
 
+def _normalise_block_lead(value: str) -> str:
+    """Compare a label while ignoring emoji and punctuation."""
+
+    return " ".join(
+        "".join(character.lower() if character.isalnum() else " " for character in value).split()
+    )
+
+
+def _strip_block_lead(value: str, label: str) -> str:
+    """Remove a duplicated first-line block label from model output."""
+
+    lines = value.splitlines()
+    if not lines or _normalise_block_lead(lines[0]) != _normalise_block_lead(label):
+        return value
+    return "\n".join(lines[1:]).lstrip()
+
+
+
 class IssueFormatError(ValueError):
     """Raised when model output cannot be converted into a Kind of News issue."""
 
@@ -75,14 +93,18 @@ class NewsIssue:
         if not isinstance(raw["sources"], list):
             raise IssueFormatError("sources must be an array")
 
+        current_header = raw["current_header"].strip()
         sources = [Source.from_mapping(item) for item in raw["sources"]]
         return cls(
             issue_id=raw["issue_id"].strip(),
-            good_thing=raw["good_thing"].strip(),
-            current_header=raw["current_header"].strip(),
-            current_or_history=raw["current_or_history"].strip(),
-            tiny_fact=raw["tiny_fact"].strip(),
-            thought=raw["thought"].strip(),
+            good_thing=_strip_block_lead(raw["good_thing"].strip(), "Good thing"),
+            current_header=current_header,
+            current_or_history=_strip_block_lead(
+                raw["current_or_history"].strip(),
+                "Happening now" if current_header == "happening_now" else "On this day",
+            ),
+            tiny_fact=_strip_block_lead(raw["tiny_fact"].strip(), "Tiny fact"),
+            thought=_strip_block_lead(raw["thought"].strip(), "Thought for the day"),
             sources=sources,
         )
 
