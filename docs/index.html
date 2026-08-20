@@ -541,6 +541,13 @@
     }
   }
 
+  function stripBlockLead(text, label) {
+    var lines = String(text || "").split(/\r?\n/);
+    var first = lines[0].trim().replace(/[^\p{L}\p{N}]+/gu, " ").trim().toLowerCase();
+    if (first !== String(label).toLowerCase()) { return String(text || ""); }
+    return lines.slice(1).join("\n").replace(/^\s+/, "");
+  }
+
   // The skill puts "(Location):" at the head of the good thing. Tint it so the
   // dateline reads as a dateline rather than as part of the sentence.
   function renderGoodThing(text) {
@@ -627,12 +634,13 @@
   }
 
   function renderIssue(issue) {
+    var currentLabel = issue.current_header === "happening_now" ? "Happening now" : "On this day";
     setText("topbar-date", mastheadDate(issue.issue_id));
-    renderGoodThing(issue.good_thing);
-    setText("current-label", issue.current_header === "happening_now" ? "Happening now" : "On this day");
-    setText("current-body", issue.current_or_history || "");
-    setText("tiny-fact", issue.tiny_fact || "");
-    setText("thought", issue.thought || "");
+    renderGoodThing(stripBlockLead(issue.good_thing, "Good thing"));
+    setText("current-label", currentLabel);
+    setText("current-body", stripBlockLead(issue.current_or_history, currentLabel));
+    setText("tiny-fact", stripBlockLead(issue.tiny_fact, "Tiny fact"));
+    setText("thought", stripBlockLead(issue.thought, "Thought for the day"));
     renderSources(Array.isArray(issue.sources) ? issue.sources : []);
   }
 
