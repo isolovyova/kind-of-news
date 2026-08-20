@@ -53,6 +53,10 @@ Return only JSON matching the supplied schema. Keep every factual claim within
 the evidence. Map each factual block to the exact source URL(s) used in the
 research. Use `on_this_day` unless the evidence clearly supports a qualified
 `happening_now` item. Keep the output concise and follow the editorial policy.
+Do not put any block heading, emoji, or heading-only line inside a text field.
+The renderer adds the four headings separately. The good_thing field may start
+with an optional `(Location):` dateline; every other field must start directly
+with its content.
 
 Research evidence:
 {research}
