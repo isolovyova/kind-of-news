@@ -46,6 +46,12 @@ Sources:
 [3] [Source name](https://...) — brief descriptor
 ```
 
+The four JSON field values must contain only their content, not the block
+heading or emoji. The rendered interface adds `☀️ Good thing`, `📅 On this day`
+or `⚡ Happening now`, `🧠 Tiny fact`, and `🌱 Thought for the day` separately.
+Start `good_thing` with the optional `(Location):` dateline, and start the
+other three fields directly with their fact or sentence.
+
 The second block may be `⚡ Happening now` only when a genuinely striking,
 non-political event from the last 24–48 hours is more interesting than a good
 anniversary. Otherwise use `📅 On this day`.
