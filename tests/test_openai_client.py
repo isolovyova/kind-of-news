@@ -2,7 +2,12 @@ import json
 import unittest
 from pathlib import Path
 
-from runner.openai_client import ResponsesClient, extract_citation_urls, parse_json_response
+from runner.openai_client import (
+    OpenAIRuntimeError,
+    ResponsesClient,
+    extract_citation_urls,
+    parse_json_response,
+)
 
 
 FIXTURE = Path(__file__).parent / "fixtures" / "valid_issue.json"
@@ -71,6 +76,26 @@ class ResponseHelpersTests(unittest.TestCase):
         self.assertNotIn("tools", sdk.responses.calls[1])
         self.assertFalse(sdk.responses.calls[0]["store"])
         self.assertEqual(len(urls), 3)
+
+    def test_api_errors_keep_safe_diagnostics(self):
+        class APIError(Exception):
+            status_code = 400
+            request_id = "req_test123"
+
+        class FailingResponses:
+            def create(self, **kwargs):
+                raise APIError("invalid model")
+
+        class FailingSDK:
+            responses = FailingResponses()
+
+        with self.assertRaisesRegex(
+            OpenAIRuntimeError,
+            r"Responses API request failed: status=400; request_id=req_test123; invalid model",
+        ):
+            ResponsesClient("key", "test-model", sdk_client=FailingSDK())._create(
+                "prompt", "output", {"type": "json_schema"}, search=False
+            )
 
 
 if __name__ == "__main__":
