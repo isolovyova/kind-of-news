@@ -15,6 +15,22 @@ class OpenAIRuntimeError(RuntimeError):
     """Raised when the Responses API cannot produce usable structured output."""
 
 
+def _api_error_detail(exc: Exception) -> str:
+    """Return useful, non-secret details from an OpenAI SDK exception."""
+
+    parts = []
+    status_code = getattr(exc, "status_code", None)
+    if status_code is not None:
+        parts.append("status=%s" % status_code)
+    request_id = getattr(exc, "request_id", None)
+    if request_id:
+        parts.append("request_id=%s" % request_id)
+    message = str(exc).strip()
+    if message:
+        parts.append(message)
+    return "; ".join(parts) or type(exc).__name__
+
+
 def _as_dict(value: Any) -> Any:
     if isinstance(value, dict):
         return value
@@ -115,7 +131,8 @@ class ResponsesClient:
         try:
             return self.client.responses.create(**kwargs)
         except Exception as exc:  # SDK exceptions vary by installed SDK version.
-            raise OpenAIRuntimeError("Responses API request failed") from exc
+            detail = _api_error_detail(exc)
+            raise OpenAIRuntimeError("Responses API request failed: %s" % detail) from exc
 
     def generate_issue(
         self,
