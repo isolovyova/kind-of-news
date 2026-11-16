@@ -1,28 +1,28 @@
 {
-  "issue_id": "2026-09-13",
-  "good_thing": "(Ithaca, New York): Cornell researchers reported a wireless device, lighter than a U.S. dime, that can record animals’ brain activity as they move through natural settings. In proof-of-concept field tests, groups of mice wore it for more than two weeks, opening a less artificial way to study social behavior beyond the lab.",
+  "issue_id": "2026-11-16",
+  "good_thing": "(Brooklyn, New York): Isaac the cat was found alive in a cabinet beneath his family’s kitchen sink after four days apart during their building’s evacuation. The Mayor’s Office of Animal Welfare and Flatbush Cats helped locate him, and he was reunited with his owner before heading for a veterinary checkup.",
   "current_header": "on_this_day",
-  "current_or_history": "On September 13, 1609, the Half Moon sailed four miles into the river now called the Hudson. Robert Juet, the ship’s mate, recorded four canoes arriving with a large supply of oysters, traded with the crew for small goods.",
-  "tiny_fact": "Tardigrades, or water bears, walk with coordinated diagonal pairs of legs, much like insects about 500,000 times their size. Their gait stays broadly consistent even as they speed up.",
-  "thought": "You do not have to make the whole day useful for it to be enough.",
+  "current_or_history": "On November 16, 1974, scientists at Puerto Rico’s Arecibo Observatory sent a brief binary radio message toward the globular cluster Messier 13. Its pictures encoded basic chemistry, DNA, a human figure, the Solar System, and the telescope itself. Attendees heard it as a warbling tone, and many stepped outside to look up at the great dish.",
+  "tiny_fact": "Wombats make cube-shaped feces because changing stiffness in the intestinal wall and muscular contractions shape corners as the material dries in the distal colon. It is not the work of a square-shaped exit.",
+  "thought": "You do not have to solve the whole week today; one kind, manageable thing is plenty.",
   "sources": [
     {
       "block": "good_thing",
-      "name": "Cornell Chronicle",
-      "descriptor": "University report on the WILD field-neuroscience device and its mouse tests, published September 10, 2026.",
-      "url": "https://news.cornell.edu/stories/2026/09/device-gives-first-view-animal-brain-activity-field"
+      "name": "Associated Press",
+      "descriptor": "Report on Isaac’s rescue and reunion, published November 15, 2026.",
+      "url": "https://apnews.com/article/brooklyn-building-collapse-missing-cat-reunion-f4f0e8007c19d735bce0ef140b93ee0f"
     },
     {
       "block": "current_or_history",
-      "name": "Library of Congress",
-      "descriptor": "Digitized edition of Robert Juet’s journal of the Half Moon’s 1609 voyage, including the September 13 entry.",
-      "url": "https://www.loc.gov/resource/gdc.11022268/?st=gallery"
+      "name": "Cornell University Department of Astronomy",
+      "descriptor": "Institutional history of the November 16, 1974 Arecibo message and ceremony.",
+      "url": "https://astro.cornell.edu/news/google-celebrates-arecibo-message-extraterrestrials"
     },
     {
       "block": "tiny_fact",
-      "name": "Princeton Engineering",
-      "descriptor": "University summary of peer-reviewed research on tardigrade walking mechanics.",
-      "url": "https://engineering.princeton.edu/news/2021/09/17/tiny-squishy-water-bears-walk-just-insects-500000-times-their-size"
+      "name": "PubMed / Soft Matter",
+      "descriptor": "Peer-reviewed study on the intestinal mechanics that form wombat feces corners.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33289747/"
     }
   ]
 }

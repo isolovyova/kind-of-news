@@ -1,0 +1,28 @@
+{
+  "issue_id": "2026-11-16",
+  "good_thing": "(Brooklyn, New York): Isaac the cat was found alive in a cabinet beneath his family’s kitchen sink after four days apart during their building’s evacuation. The Mayor’s Office of Animal Welfare and Flatbush Cats helped locate him, and he was reunited with his owner before heading for a veterinary checkup.",
+  "current_header": "on_this_day",
+  "current_or_history": "On November 16, 1974, scientists at Puerto Rico’s Arecibo Observatory sent a brief binary radio message toward the globular cluster Messier 13. Its pictures encoded basic chemistry, DNA, a human figure, the Solar System, and the telescope itself. Attendees heard it as a warbling tone, and many stepped outside to look up at the great dish.",
+  "tiny_fact": "Wombats make cube-shaped feces because changing stiffness in the intestinal wall and muscular contractions shape corners as the material dries in the distal colon. It is not the work of a square-shaped exit.",
+  "thought": "You do not have to solve the whole week today; one kind, manageable thing is plenty.",
+  "sources": [
+    {
+      "block": "good_thing",
+      "name": "Associated Press",
+      "descriptor": "Report on Isaac’s rescue and reunion, published November 15, 2026.",
+      "url": "https://apnews.com/article/brooklyn-building-collapse-missing-cat-reunion-f4f0e8007c19d735bce0ef140b93ee0f"
+    },
+    {
+      "block": "current_or_history",
+      "name": "Cornell University Department of Astronomy",
+      "descriptor": "Institutional history of the November 16, 1974 Arecibo message and ceremony.",
+      "url": "https://astro.cornell.edu/news/google-celebrates-arecibo-message-extraterrestrials"
+    },
+    {
+      "block": "tiny_fact",
+      "name": "PubMed / Soft Matter",
+      "descriptor": "Peer-reviewed study on the intestinal mechanics that form wombat feces corners.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33289747/"
+    }
+  ]
+}
