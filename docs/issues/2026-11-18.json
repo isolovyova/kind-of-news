@@ -1,0 +1,28 @@
+{
+  "issue_id": "2026-11-18",
+  "good_thing": "(San Mateo County, California): Conservation partners released 62 young San Francisco garter snakes, born and raised at the San Francisco Zoo, at carefully selected wild sites. It was the first release of its kind for the species, whose small, fragmented populations occur nowhere else on Earth.",
+  "current_header": "on_this_day",
+  "current_or_history": "On November 18, 1883, North American railroad clocks shifted to the new standard-time system at noon. In several cities, noon came twice: first by local solar time, then by railroad time, giving the day its literal nickname, the “Day of Two Noons.”",
+  "tiny_fact": "The Moon has so little atmosphere that wind and rain cannot erase marks on its surface. NASA’s Lunar Reconnaissance Orbiter has photographed tracks made by Apollo astronauts and their rovers decades later.",
+  "thought": "You do not need to make the whole day meaningful; one small good thing is plenty.",
+  "sources": [
+    {
+      "block": "good_thing",
+      "name": "San Francisco Zoo & Gardens",
+      "descriptor": "November 10, 2026 announcement on the inaugural release of 62 head-started San Francisco garter snakes.",
+      "url": "https://www.sfzoo.org/a-new-generation-of-san-francisco-garter-snakes-returns-to-the-wild/"
+    },
+    {
+      "block": "current_or_history",
+      "name": "Library of Congress",
+      "descriptor": "History of the November 18, 1883 standard-time change and its “Day of Two Noons” detail.",
+      "url": "https://blogs.loc.gov/law/2024/11/whose-time-is-it-anyway-a-brief-history-of-standardized-time-zones-in-the-united-states/"
+    },
+    {
+      "block": "tiny_fact",
+      "name": "NASA Science",
+      "descriptor": "Explanation of why lunar tracks endure and how the Lunar Reconnaissance Orbiter has observed them.",
+      "url": "https://science.nasa.gov/solar-system/moon/10-cool-things-nasas-lunar-reconnaissance-orbiter-is-teaching-us-about-the-moon/"
+    }
+  ]
+}

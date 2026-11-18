@@ -1,28 +1,28 @@
 {
-  "issue_id": "2026-11-17",
-  "good_thing": "(Springdale, Utah): Brent Phillips and his college-age daughter Jordan arrived at Zion National Park with their Angels Landing plans spoiled by flight delays and an unsuccessful permit attempt. After stopping to take a photo for a solo hiker, they later met her group, which had two unused permits and gave them to the pair. Their dream hike was back on, thanks to a small favor that came back around.",
+  "issue_id": "2026-11-18",
+  "good_thing": "(San Mateo County, California): Conservation partners released 62 young San Francisco garter snakes, born and raised at the San Francisco Zoo, at carefully selected wild sites. It was the first release of its kind for the species, whose small, fragmented populations occur nowhere else on Earth.",
   "current_header": "on_this_day",
-  "current_or_history": "On November 17, 1970, the Soviet Luna 17 mission landed in Mare Imbrium and deployed Lunokhod 1, the first wheeled vehicle on the Moon. A five-person ground crew guided the eight-wheeled rover down its ramp; it later worked for 322 Earth days and returned more than 20,000 television images.",
-  "tiny_fact": "A cephalopod’s brain forms a doughnut-like ring around its esophagus, stretching slightly as food passes through. Octopuses, squid, and cuttlefish also have three hearts.",
-  "thought": "A good day does not have to go exactly to plan to become one worth remembering.",
+  "current_or_history": "On November 18, 1883, North American railroad clocks shifted to the new standard-time system at noon. In several cities, noon came twice: first by local solar time, then by railroad time, giving the day its literal nickname, the “Day of Two Noons.”",
+  "tiny_fact": "The Moon has so little atmosphere that wind and rain cannot erase marks on its surface. NASA’s Lunar Reconnaissance Orbiter has photographed tracks made by Apollo astronauts and their rovers decades later.",
+  "thought": "You do not need to make the whole day meaningful; one small good thing is plenty.",
   "sources": [
     {
       "block": "good_thing",
-      "name": "KSL.com",
-      "descriptor": "Local report on the strangers who shared spare Angels Landing permits with a father and daughter.",
-      "url": "https://www.ksl.com/article/51646063/father-and-daughters-dream-hike-at-zion-national-park-saved-by-strangers-kindness"
+      "name": "San Francisco Zoo & Gardens",
+      "descriptor": "November 10, 2026 announcement on the inaugural release of 62 head-started San Francisco garter snakes.",
+      "url": "https://www.sfzoo.org/a-new-generation-of-san-francisco-garter-snakes-returns-to-the-wild/"
     },
     {
       "block": "current_or_history",
-      "name": "NASA",
-      "descriptor": "NASA’s history of Luna 17 and Lunokhod 1, including the November 17, 1970 landing, ground crew, and mission results.",
-      "url": "https://www.nasa.gov/wp-content/uploads/2018/09/beyond-earth-tagged.pdf"
+      "name": "Library of Congress",
+      "descriptor": "History of the November 18, 1883 standard-time change and its “Day of Two Noons” detail.",
+      "url": "https://blogs.loc.gov/law/2024/11/whose-time-is-it-anyway-a-brief-history-of-standardized-time-zones-in-the-united-states/"
     },
     {
       "block": "tiny_fact",
-      "name": "Monterey Bay Aquarium",
-      "descriptor": "Explanation of cephalopod anatomy, including the doughnut-shaped brain and three hearts.",
-      "url": "https://www.montereybayaquarium.org/animals-the-ocean/animals-a-to-z/cephalopods"
+      "name": "NASA Science",
+      "descriptor": "Explanation of why lunar tracks endure and how the Lunar Reconnaissance Orbiter has observed them.",
+      "url": "https://science.nasa.gov/solar-system/moon/10-cool-things-nasas-lunar-reconnaissance-orbiter-is-teaching-us-about-the-moon/"
     }
   ]
 }
