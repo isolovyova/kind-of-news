@@ -1,28 +1,34 @@
 {
-  "issue_id": "2026-11-18",
-  "good_thing": "(San Mateo County, California): Conservation partners released 62 young San Francisco garter snakes, born and raised at the San Francisco Zoo, at carefully selected wild sites. It was the first release of its kind for the species, whose small, fragmented populations occur nowhere else on Earth.",
+  "issue_id": "2026-11-19",
+  "good_thing": "(Stony Brook, New York): Stony Brook University Libraries has introduced Rubo, a 4-foot-6 library-assistant robot, with a week-long meet-and-greet. Rubo is designed to answer campus and library questions, help with book checkout and study-room reservations, chat in several languages, and play rock-paper-scissors.",
   "current_header": "on_this_day",
-  "current_or_history": "On November 18, 1883, North American railroad clocks shifted to the new standard-time system at noon. In several cities, noon came twice: first by local solar time, then by railroad time, giving the day its literal nickname, the “Day of Two Noons.”",
-  "tiny_fact": "The Moon has so little atmosphere that wind and rain cannot erase marks on its surface. NASA’s Lunar Reconnaissance Orbiter has photographed tracks made by Apollo astronauts and their rovers decades later.",
-  "thought": "You do not need to make the whole day meaningful; one small good thing is plenty.",
+  "current_or_history": "On November 19, 1863, Abraham Lincoln gave the Gettysburg Address at the dedication of the Soldiers’ National Cemetery in Gettysburg, Pennsylvania. Edward Everett, the featured orator, spoke for more than two hours; Lincoln spoke for about two minutes, after finishing his 272-word address at attorney David Wills’s home the night before.",
+  "tiny_fact": "A day on Venus lasts 243 Earth days, while its year lasts 225. It rotates so slowly, and backward relative to most planets, that the Sun would rise in the west there.",
+  "thought": "A little usefulness, offered kindly, can make a place feel more welcoming.",
   "sources": [
     {
       "block": "good_thing",
-      "name": "San Francisco Zoo & Gardens",
-      "descriptor": "November 10, 2026 announcement on the inaugural release of 62 head-started San Francisco garter snakes.",
-      "url": "https://www.sfzoo.org/a-new-generation-of-san-francisco-garter-snakes-returns-to-the-wild/"
+      "name": "Stony Brook University News",
+      "descriptor": "November 18 report on Rubo’s introduction, capabilities, and student meet-and-greet.",
+      "url": "https://news.stonybrook.edu/university/at-your-service-library-robot-rubo-meets-the-sbu-community/"
     },
     {
       "block": "current_or_history",
-      "name": "Library of Congress",
-      "descriptor": "History of the November 18, 1883 standard-time change and its “Day of Two Noons” detail.",
-      "url": "https://blogs.loc.gov/law/2024/11/whose-time-is-it-anyway-a-brief-history-of-standardized-time-zones-in-the-united-states/"
+      "name": "National Park Service",
+      "descriptor": "History of the cemetery dedication, including Everett’s two-hour oration and Lincoln’s two-minute address.",
+      "url": "https://www.nps.gov/places/soldiers-national-cemetery.htm"
+    },
+    {
+      "block": "current_or_history",
+      "name": "National Park Service",
+      "descriptor": "Records that Lincoln completed the 272-word speech in the Wills home on November 18, 1863.",
+      "url": "https://www.nps.gov/media/video/view.htm?id=5340eee7-a61b-466e-9746-8501473de005"
     },
     {
       "block": "tiny_fact",
       "name": "NASA Science",
-      "descriptor": "Explanation of why lunar tracks endure and how the Lunar Reconnaissance Orbiter has observed them.",
-      "url": "https://science.nasa.gov/solar-system/moon/10-cool-things-nasas-lunar-reconnaissance-orbiter-is-teaching-us-about-the-moon/"
+      "descriptor": "Venus facts, including its 243-Earth-day rotation period, 225-Earth-day year, and backward spin.",
+      "url": "https://science.nasa.gov/venus/venus-facts/"
     }
   ]
 }
