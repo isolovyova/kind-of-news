@@ -1,28 +1,34 @@
 {
-  "issue_id": "2026-11-21",
-  "good_thing": "(Colorado Springs, Colorado): Two rescued Alaska moose calves have arrived at Cheyenne Mountain Zoo’s Rocky Mountain Wild area. The seven-month-olds spent the summer together at the Alaska Zoo after their May rescue, and are now exploring a baby-proofed yard, eating well, and settling in together.",
+  "issue_id": "2026-11-22",
+  "good_thing": "(Aliquippa, Pennsylvania): Nineteen dogs rescued from an alleged dogfighting operation are now legally in the Beaver County Humane Society’s custody and can begin moving toward permanent homes. Eight have already been placed with their foster families, and other dogs are being prepared for adoption. The shelter is also offering adopters complimentary training.",
   "current_header": "on_this_day",
-  "current_or_history": "On November 21, 1783, Jean-François Pilâtre de Rozier and François Laurent, the Marquis d’Arlandes, made the first free flight with human passengers in a Montgolfier hot-air balloon.",
-  "tiny_fact": "Sea otters have loose folds of skin beneath their forearms that work like pockets. They can tuck prey there while diving, keeping their paws free to continue foraging.",
-  "thought": "You do not have to make every day remarkable for it to be worth having.",
+  "current_or_history": "On November 22, 1880, Helen Louise Leonard made her New York debut at Tony Pastor’s Theatre under the name Lillian Russell. Within weeks, she had a prominent role in a comic version of The Pirates of Penzance and became an instant star of American musical theater.",
+  "tiny_fact": "Aye-ayes, the lemurs of Madagascar, have a small extra digit on each hand: a pseudothumb with its own fingerprint. It appears to help them grip branches and objects.",
+  "thought": "You do not have to make the whole day meaningful for one small good thing to count.",
   "sources": [
     {
       "block": "good_thing",
-      "name": "Cheyenne Mountain Zoo",
-      "descriptor": "November 19, 2026 update on the rescued Alaska moose calves’ arrival and settling-in",
-      "url": "https://www.cmzoo.org/news/archive/cheyenne-mountain-zoo-excitedly-prepares-for-the-arrival-of-two-rescued-moose-calves/"
+      "name": "WPXI",
+      "descriptor": "Reports on the humane society’s custody of 19 rescued dogs and placements with foster families.",
+      "url": "https://www.wpxi.com/news/local/19-dogs-rescued-alleged-aliquippa-dogfighting-ring-officially-shelters-custody/GKQYSYKEMFHKNINH6DNGA5Y6IY/"
+    },
+    {
+      "block": "good_thing",
+      "name": "CBS Pittsburgh",
+      "descriptor": "Follow-up on rehabilitation, adoption availability, and complimentary training for adopters.",
+      "url": "https://www.cbsnews.com/pittsburgh/news/aliquippa-dogfighting-dogs-adoption/"
     },
     {
       "block": "current_or_history",
-      "name": "Smithsonian National Air and Space Museum",
-      "descriptor": "History of the first free human balloon flight on November 21, 1783",
-      "url": "https://airandspace.si.edu/collection-objects/ascent-great-montgolfier-balloon/nasm_A19680126000"
+      "name": "Library of Congress",
+      "descriptor": "Today in History entry on Lillian Russell’s November 22, 1880 debut and early breakthrough.",
+      "url": "https://www.loc.gov/item/today-in-history/november-22?loclr=eatod"
     },
     {
       "block": "tiny_fact",
-      "name": "Monterey Bay Aquarium",
-      "descriptor": "Sea-otter natural-history guide explaining their underarm skin pockets and feeding behavior",
-      "url": "https://www.montereybayaquarium.org/animals-the-ocean/animals-a-to-z/sea-otter"
+      "name": "NC State News",
+      "descriptor": "University report on the peer-reviewed discovery of the aye-aye pseudothumb.",
+      "url": "https://news.ncsu.edu/2019/10/aye-aye-extra-finger/"
     }
   ]
 }
