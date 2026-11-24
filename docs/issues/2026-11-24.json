@@ -1,0 +1,34 @@
+{
+  "issue_id": "2026-11-24",
+  "good_thing": "(Chattanooga, Tennessee): The Humane Educational Society and McKamey Animal Center’s first joint mega adoption event ended with 101 animals finding families. Some had spent about a year in shelter care, making room for both fresh starts and quieter kennels.",
+  "current_header": "on_this_day",
+  "current_or_history": "On November 24, 1974, Donald Johanson and Tom Gray found the first bones of the fossil later called Lucy at Hadar, Ethiopia. That evening, the Beatles’ “Lucy in the Sky With Diamonds” kept playing during the celebration, and the nickname stuck; later work recovered 47 bones, about 40 percent of the skeleton.",
+  "tiny_fact": "Sea otters have the world’s densest fur. Their two-layer coats can hold more than a million hairs per square inch, helping keep them warm without the thick blubber many marine mammals rely on.",
+  "thought": "You do not have to make the whole day meaningful for one small part of it to be good.",
+  "sources": [
+    {
+      "block": "good_thing",
+      "name": "WTVC / Fox Chattanooga",
+      "descriptor": "Local report confirming that 101 animals found families at the joint adoption event.",
+      "url": "https://foxchattanooga.com/newsletter-daily/animal-shelters-join-forces-for-mega-adoption-event-ahead-of-thanksgiving-101-find-homes"
+    },
+    {
+      "block": "good_thing",
+      "name": "Humane Educational Society",
+      "descriptor": "Primary event listing for the first joint mega adoption event with McKamey Animal Center.",
+      "url": "https://www.heschatt.org/event-details/mega-adoption-event-2026-11-21-11-00"
+    },
+    {
+      "block": "current_or_history",
+      "name": "Arizona State University Institute of Human Origins",
+      "descriptor": "Institutional account of Lucy’s discovery, nickname, and recovered remains.",
+      "url": "https://iho.asu.edu/node/15"
+    },
+    {
+      "block": "tiny_fact",
+      "name": "Monterey Bay Aquarium",
+      "descriptor": "Natural-history reference on sea-otter fur density and insulation.",
+      "url": "https://www.montereybayaquarium.org/animals-the-ocean/animals-a-to-z/sea-otter"
+    }
+  ]
+}

@@ -1,28 +1,34 @@
 {
-  "issue_id": "2026-11-23",
-  "good_thing": "(San Mateo County, California): The San Francisco Zoo and conservation partners released 62 young San Francisco garter snakes at carefully selected wild sites this autumn. Biologists had temporarily brought pregnant females from a healthy population to the zoo, raised the offspring through their most vulnerable stage, and genetically tested each juvenile before release. The zoo calls it the first successful head-starting program for this endangered snake, found only in a small part of the Bay Area.",
+  "issue_id": "2026-11-24",
+  "good_thing": "(Chattanooga, Tennessee): The Humane Educational Society and McKamey Animal Center’s first joint mega adoption event ended with 101 animals finding families. Some had spent about a year in shelter care, making room for both fresh starts and quieter kennels.",
   "current_header": "on_this_day",
-  "current_or_history": "On November 23, 1889, San Francisco’s Palais Royale Saloon put two coin-operated phonographs into public use, an early step toward the jukebox. They had listening tubes rather than speakers, so customers leaned in to hear a recording through one of the attached tubes. Public recorded music began as a surprisingly private little experience.",
-  "tiny_fact": "Wombats really do produce cube-shaped droppings. Research found that the cubes form in the last part of the intestine, where alternating tissue stiffness and contractions make flat faces and corners as the material dries and firms.",
-  "thought": "You do not have to solve the whole week before you begin Monday.",
+  "current_or_history": "On November 24, 1974, Donald Johanson and Tom Gray found the first bones of the fossil later called Lucy at Hadar, Ethiopia. That evening, the Beatles’ “Lucy in the Sky With Diamonds” kept playing during the celebration, and the nickname stuck; later work recovered 47 bones, about 40 percent of the skeleton.",
+  "tiny_fact": "Sea otters have the world’s densest fur. Their two-layer coats can hold more than a million hairs per square inch, helping keep them warm without the thick blubber many marine mammals rely on.",
+  "thought": "You do not have to make the whole day meaningful for one small part of it to be good.",
   "sources": [
     {
       "block": "good_thing",
-      "name": "San Francisco Zoo & Gardens",
-      "descriptor": "Primary report on the release, conservation partners, head-starting process, and genetic testing.",
-      "url": "https://www.sfzoo.org/a-new-generation-of-san-francisco-garter-snakes-returns-to-the-wild/"
+      "name": "WTVC / Fox Chattanooga",
+      "descriptor": "Local report confirming that 101 animals found families at the joint adoption event.",
+      "url": "https://foxchattanooga.com/newsletter-daily/animal-shelters-join-forces-for-mega-adoption-event-ahead-of-thanksgiving-101-find-homes"
+    },
+    {
+      "block": "good_thing",
+      "name": "Humane Educational Society",
+      "descriptor": "Primary event listing for the first joint mega adoption event with McKamey Animal Center.",
+      "url": "https://www.heschatt.org/event-details/mega-adoption-event-2026-11-21-11-00"
     },
     {
       "block": "current_or_history",
-      "name": "University of Maryland Digital Repository",
-      "descriptor": "Scholarly historical research documenting the November 23, 1889 installation and its listening tubes.",
-      "url": "https://api.drum.lib.umd.edu/server/api/core/bitstreams/c530b2ac-0e4f-4a76-b32b-b897de967750/content"
+      "name": "Arizona State University Institute of Human Origins",
+      "descriptor": "Institutional account of Lucy’s discovery, nickname, and recovered remains.",
+      "url": "https://iho.asu.edu/node/15"
     },
     {
       "block": "tiny_fact",
-      "name": "Soft Matter, Royal Society of Chemistry",
-      "descriptor": "Peer-reviewed study of the intestinal mechanics that form wombat feces into cubes.",
-      "url": "https://pubs.rsc.org/en/content/articlelanding/2021/sm/d0sm01230k/unauth"
+      "name": "Monterey Bay Aquarium",
+      "descriptor": "Natural-history reference on sea-otter fur density and insulation.",
+      "url": "https://www.montereybayaquarium.org/animals-the-ocean/animals-a-to-z/sea-otter"
     }
   ]
 }
