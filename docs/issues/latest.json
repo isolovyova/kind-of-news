@@ -1,34 +1,28 @@
 {
-  "issue_id": "2026-11-22",
-  "good_thing": "(Aliquippa, Pennsylvania): Nineteen dogs rescued from an alleged dogfighting operation are now legally in the Beaver County Humane Society’s custody and can begin moving toward permanent homes. Eight have already been placed with their foster families, and other dogs are being prepared for adoption. The shelter is also offering adopters complimentary training.",
+  "issue_id": "2026-11-23",
+  "good_thing": "(San Mateo County, California): The San Francisco Zoo and conservation partners released 62 young San Francisco garter snakes at carefully selected wild sites this autumn. Biologists had temporarily brought pregnant females from a healthy population to the zoo, raised the offspring through their most vulnerable stage, and genetically tested each juvenile before release. The zoo calls it the first successful head-starting program for this endangered snake, found only in a small part of the Bay Area.",
   "current_header": "on_this_day",
-  "current_or_history": "On November 22, 1880, Helen Louise Leonard made her New York debut at Tony Pastor’s Theatre under the name Lillian Russell. Within weeks, she had a prominent role in a comic version of The Pirates of Penzance and became an instant star of American musical theater.",
-  "tiny_fact": "Aye-ayes, the lemurs of Madagascar, have a small extra digit on each hand: a pseudothumb with its own fingerprint. It appears to help them grip branches and objects.",
-  "thought": "You do not have to make the whole day meaningful for one small good thing to count.",
+  "current_or_history": "On November 23, 1889, San Francisco’s Palais Royale Saloon put two coin-operated phonographs into public use, an early step toward the jukebox. They had listening tubes rather than speakers, so customers leaned in to hear a recording through one of the attached tubes. Public recorded music began as a surprisingly private little experience.",
+  "tiny_fact": "Wombats really do produce cube-shaped droppings. Research found that the cubes form in the last part of the intestine, where alternating tissue stiffness and contractions make flat faces and corners as the material dries and firms.",
+  "thought": "You do not have to solve the whole week before you begin Monday.",
   "sources": [
     {
       "block": "good_thing",
-      "name": "WPXI",
-      "descriptor": "Reports on the humane society’s custody of 19 rescued dogs and placements with foster families.",
-      "url": "https://www.wpxi.com/news/local/19-dogs-rescued-alleged-aliquippa-dogfighting-ring-officially-shelters-custody/GKQYSYKEMFHKNINH6DNGA5Y6IY/"
-    },
-    {
-      "block": "good_thing",
-      "name": "CBS Pittsburgh",
-      "descriptor": "Follow-up on rehabilitation, adoption availability, and complimentary training for adopters.",
-      "url": "https://www.cbsnews.com/pittsburgh/news/aliquippa-dogfighting-dogs-adoption/"
+      "name": "San Francisco Zoo & Gardens",
+      "descriptor": "Primary report on the release, conservation partners, head-starting process, and genetic testing.",
+      "url": "https://www.sfzoo.org/a-new-generation-of-san-francisco-garter-snakes-returns-to-the-wild/"
     },
     {
       "block": "current_or_history",
-      "name": "Library of Congress",
-      "descriptor": "Today in History entry on Lillian Russell’s November 22, 1880 debut and early breakthrough.",
-      "url": "https://www.loc.gov/item/today-in-history/november-22?loclr=eatod"
+      "name": "University of Maryland Digital Repository",
+      "descriptor": "Scholarly historical research documenting the November 23, 1889 installation and its listening tubes.",
+      "url": "https://api.drum.lib.umd.edu/server/api/core/bitstreams/c530b2ac-0e4f-4a76-b32b-b897de967750/content"
     },
     {
       "block": "tiny_fact",
-      "name": "NC State News",
-      "descriptor": "University report on the peer-reviewed discovery of the aye-aye pseudothumb.",
-      "url": "https://news.ncsu.edu/2019/10/aye-aye-extra-finger/"
+      "name": "Soft Matter, Royal Society of Chemistry",
+      "descriptor": "Peer-reviewed study of the intestinal mechanics that form wombat feces into cubes.",
+      "url": "https://pubs.rsc.org/en/content/articlelanding/2021/sm/d0sm01230k/unauth"
     }
   ]
 }
