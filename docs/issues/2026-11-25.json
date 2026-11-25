@@ -1,0 +1,28 @@
+{
+  "issue_id": "2026-11-25",
+  "good_thing": "(United States): On November 23, the FDA approved Welgemda (ribitol) for limb-girdle muscular dystrophy type 2I/R9, a rare inherited muscle disease. It is the first approved therapy for any form of limb-girdle muscular dystrophy; in a 112-participant study, treated participants had significant improvements in walking speed and lung function compared with placebo.",
+  "current_header": "on_this_day",
+  "current_or_history": "On November 25, 1952, Agatha Christie’s The Mousetrap opened at London’s Ambassadors Theatre. Its first London cast included Richard Attenborough and Sheila Sim, and Christie had given the play’s rights to her nine-year-old grandson, Mathew Prichard.",
+  "tiny_fact": "A day on Venus is longer than its year: the planet takes 243 Earth days to rotate once and 225 Earth days to orbit the Sun. Because Venus rotates backward relative to Earth, the Sun would rise in the west there.",
+  "thought": "You do not have to make every day remarkable for it to count.",
+  "sources": [
+    {
+      "block": "good_thing",
+      "name": "U.S. Food and Drug Administration",
+      "descriptor": "November 23, 2026 approval announcement for Welgemda, including its indication and trial results.",
+      "url": "https://www.fda.gov/news-events/press-announcements/fda-approves-first-treatment-limb-girdle-muscular-dystrophy-type-2ir9"
+    },
+    {
+      "block": "current_or_history",
+      "name": "Agatha Christie",
+      "descriptor": "Official history of The Mousetrap, including its November 25, 1952 opening, original cast, and Mathew Prichard detail.",
+      "url": "https://www.agathachristie.com/theatre/the-mousetrap"
+    },
+    {
+      "block": "tiny_fact",
+      "name": "NASA Science",
+      "descriptor": "Venus rotation and orbit facts.",
+      "url": "https://science.nasa.gov/venus/venus-facts/"
+    }
+  ]
+}
