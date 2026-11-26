@@ -1,0 +1,28 @@
+{
+  "issue_id": "2026-11-26",
+  "good_thing": "(Middletown, Rhode Island): The Potter League for Animals has welcomed four dogs rescued from the streets of Kabul: Linus, Tope, Diesel, and Zeus. After Rhode Island’s required five-day isolation and veterinary preparation, the dogs are expected to become available for adoption.",
+  "current_header": "on_this_day",
+  "current_or_history": "On November 26, 1864, Charles Lutwidge Dodgson, writing as Lewis Carroll, sent Alice Liddell his handwritten, illustrated manuscript of “Alice’s Adventures Under Ground.” It began with a story told to Alice and her sisters on a July 1862 river outing, then grew into “Alice’s Adventures in Wonderland.”",
+  "tiny_fact": "An octopus has three hearts: two pump blood to its gills for oxygen, while the third circulates oxygenated blood through the rest of its body.",
+  "thought": "You do not have to make the whole day meaningful for one small part of it to be enough.",
+  "sources": [
+    {
+      "block": "good_thing",
+      "name": "Potter League for Animals",
+      "descriptor": "November 25, 2026 shelter report on four Kabul rescue dogs arriving in Middletown for eventual adoption.",
+      "url": "https://potterleague.org/media/press/"
+    },
+    {
+      "block": "current_or_history",
+      "name": "British Library Archives and Manuscripts Catalogue",
+      "descriptor": "Catalogue record for the original “Alice’s Adventures Under Ground” manuscript, including its November 26, 1864 delivery date and later publication history.",
+      "url": "https://searcharchives.bl.uk/catalog/032-002102746"
+    },
+    {
+      "block": "tiny_fact",
+      "name": "NOAA Ocean Service",
+      "descriptor": "Explanation of octopus circulation and the separate jobs of its three hearts.",
+      "url": "https://oceanservice.noaa.gov/news/feb26/undersea-creatures-valentines-day.html"
+    }
+  ]
+}
